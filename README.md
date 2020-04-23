@@ -21,7 +21,7 @@ The data manipulation gets defined by stored procedures (smart contracts) in Was
 
 This workshop focuses on AssemblyScript as one of two currently supported languages for contract development.
 
-*We will not be deploying any of these contracts to the network since our focus is on learning AssemblyScript and almost all of the code presented in this workshop is also running on [live examples here](https://examples.nearprotocol.com) where you will also find the front end code that relies on these contracts.*
+*We will not be deploying any of these contracts to the network since our focus is on learning AssemblyScript and almost all of the code presented in this workshop is also running on [live examples](https://examples.nearprotocol.com) where you will also find the frontend code that relies on these contracts.*
 
 ## Environment Setup
 
@@ -32,26 +32,6 @@ This workshop focuses on AssemblyScript as one of two currently supported langua
 5. run `yarn mock` to deploy contracts to a local mock virtual machine for testing
 
 See `package.json` for more detail about these scripts.
-
-### Filtering Tests
-
-You can filter tests using the following syntax
-
-```bash
-yarn test -f <contract name>
-# for example
-# yarn test -f greeting
-```
-
-### Mock Deployment
-
-You must specify the contract file and method when attempting to execute the contract in the local mock virtual machine
-
-```bash
-yarn mock --wasm-file <path to contract .wasm file> --method-name <contract method name>
-# for example
-# yarn mock --wasm-file ./out/counter.wasm --method-name incrementCounter
-```
 
 You will find the following folder structure in this repository under the `assembly` folder.
 
@@ -77,16 +57,38 @@ assembly
     └── 03.BucketList
 ```
 
+### Filtering Tests
+
+You can filter tests using the following syntax
+
+```bash
+yarn test -f <contract name>
+# for example
+# yarn test -f greeting
+```
+
+### Mock Deployment
+
+You must specify the contract file and method when attempting to execute the contract in the local mock virtual machine
+
+```bash
+yarn mock --wasm-file <path to contract .wasm file> --method-name <contract method name>
+# for example
+# yarn mock --wasm-file ./out/counter.wasm --method-name incrementCounter
+```
+
 *Note the projects are ordered by increasing complexity so lower numbers roughly implies "easier to understand".*
 
 ## Activity::Scavenger Hunt
 
-Find examples of the following.  Keep your own notes.  Time permitting, we will share and discuss your findings and answer questions at the end of the activity.
+Keep your own notes.  Time permitting, we will share and discuss your findings and answer questions at the end of the activity.
+
+Find examples of the following.  
 
 **Orientation**
 
 *Note, some of these may only take you **a few seconds** to complete so don't overthink things.  This activity is about massive exposure to several examples of smart contracts written using AssemblyScript for the NEAR platform.*
-  
+
 - [ ] a contract method that takes no parameters
 - [ ] a contract method that takes one parameter
 - [ ] a model used by a contract method
@@ -99,6 +101,8 @@ Find examples of the following.  Keep your own notes.  Time permitting, we will 
 
 **Storing Data**
 
+NEAR Protocol stores data in a key-value store called `Storage` which is also wrapped with a few persistent collections for developer convenience including `PersistentVector`, `PersistentSet`, `PersistentMap` and `PersistentDeque`.  Reading and writing to `Storage` requires specifying the type of data to store, whether `string`, `number` or `binary`.  Any custom data types (ie. custom data models) must be decorated with the `@nearBindgen` decorator so that the system knows to serialize them for storage.
+
 - [ ] an example that includes the `@nearBindgen` decorator (used to support serialization of custom data models)
 - [ ] an example that uses `Storage` to read and / or write data from blockchain storage
 - [ ] an example that uses `PersistentVector` to store contract data in an array-like data structure
@@ -109,15 +113,27 @@ Find examples of the following.  Keep your own notes.  Time permitting, we will 
 - [ ] an example that uses the `getString()` method on the `Storage` class
 - [ ] an example that uses the `setString()` method on the `Storage` class
 
+**Contract Context**
+
+NEAR Protocol requires that each account only have 1 contract deployed to its storage.  The account maintains a copy of the contract code as well as any state storage consumed by the contract.  You can read more about [accounts on the NEAR platform here](https://docs.nearprotocol.com/docs/concepts/account).
+
+- [ ] an example of using `context.sender` which represents the account that signed the current transaction  
+- [ ] an example of a unit test where the test explicitly sets the `signer_account_id` to control `context.sender`
+- [ ] an example of using `context.contractName` which represents the account on which the contract lives
+- [ ] an example of a unit test where the test explicitly sets the `current_account_id` to control `context.contractName`
+- [ ] an example of using `context.attachedDeposit` to capture the tokens attached to a contract function call
+- [ ] an example of a unit test where the test explicitly sets the `attached_deposit` to control `context.attachedDeposit`
+
 **Validation**
 
-- [ ] an example of using `assert()`
+- [ ] an example of using `assert()` to guarantee that some value meets the necessary criteria
 
 ## Activity::Debugging Challenge
 
-Debug as many of the following problems as you can.  
+Debug as many of the following problems as you can.  They are ordered by increasing difficulty.
 
-**Important Note:** none of the tests were altered, only the `main.ts` contract file and / or the `model.ts` model file were changed from the original.   
+**Important Note:** 
+None of the tests were altered, only the `main.ts` contract file and / or the `model.ts` model file were changed from the original to create the problems you see in these failing tests or failures to compile the code. 
 
 - [ ] run `yarn test -f broken-greeting` and solve the issues (there are 4 of them)
 - [ ] run `yarn test -f broken-counter` and solve the issues (there are 5 of them) 
@@ -135,19 +151,24 @@ If you get really stuck on this debugging challenge and just can't get on with y
 
 Choose one of the following projects and write the model(s) and contract(s) that satisfy the following requirements.  Include unit tests of course.  Test everything locally using `yarn mock`.
 
+**Important Note:** 
+The design guidelines below are almost certainly incomplete.  They are intended to inspire you to consider the design challenge on your own or with your pair or team.  Feel free to run with these ideas and do not be constrained by what you see here.
 
 ### PinkyPromise
 
-*(inspired by a public hackathon project)*
+*(inspired by a 2019 hackathon project)*
 
 PinkyPromise is a system for recording promises on the blockchain for all to see, forever and ever.  A promise is a piece of text that is made `from` someone `to` someone (possibly themselves).  A promise may eventually be marked as `kept` or `broken` by the owner of the `to` account.
-   - Models
-     - `PinkyPromise`
-       - Collects a commitment (as string) between two accounts (as strings).  Consider whether to use `Storage` directly (our on-chain key-value store) or one of the persistent collections that wraps `Storage` to mimic a Vector, Map, Queue or Set.
-   - Contracts
-     - `main`
-       - `makePromise(to: string, statement: string)` 
+  
+**Models**
 
+- `PinkyPromise`
+  - Collects a commitment (as string) between two accounts (as strings).  Consider whether to use `Storage` directly (our on-chain key-value store) or one of the persistent collections that wraps `Storage` to mimic a Vector, Map, Queue or Set.
+
+**Contracts**
+
+- `main`
+  - `makePromise(to: string, statement: string)` 
 
 ### BucketList
 
@@ -181,6 +202,9 @@ OpenPetition is a system for managing the creation and support of petitions (ie.
     - `title` as `string`
     - `body` as `string` and 
     - `funding` as `u128`
+  - The Petition model should include methods like
+    - `sign(): bool`
+    - `signWithFunds(amount: u128 = 0): bool`
 
 **Contracts**
 
@@ -193,3 +217,13 @@ OpenPetition is a system for managing the creation and support of petitions (ie.
 **Stretch Goals**
 
 - Consider how you would structure this project if each petition were its own contract instead of a model on a single contract.  What could the benefits of this be?
+
+
+## Getting Help
+
+If you find yourself stuck with any of this, feel free to reach out to us via the following links:
+
+- [near.org / help](http://near.org/help)
+- [NEAR Telegram Group](https://t.me/cryptonear)
+- [NEAR Discord Channel](https://discordapp.com/invite/jsAu4pP)
+- [Documentation](http://docs.nearprotocol.com/)
