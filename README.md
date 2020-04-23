@@ -17,7 +17,7 @@ If you're totally new to NEAR you can [start here](https://docs.nearprotocol.com
 
 NEAR Protocol (aka "NEAR") is a public peer-to-peer key-value database. Public as in open to everyone for read anything and write what you are allowed to. The write permissions are defined by the access keys, so only the owner of the data can give permissions to modify the data they own.
 
-The data manipulation gets defined by stored procedures (smart contracts) in Wasm, which means that those can be implemented in any programming language compilable to Wasm (e.g. Rust, AssemblyScript, Kotlin, C, C++, Nim, Zig, etc).
+The data manipulation gets defined by stored procedures (smart contracts) in [Wasm](https://webassembly.org), which means that those can be implemented in any programming language compilable to Wasm (e.g. Rust, AssemblyScript, Kotlin, C, C++, Nim, Zig, etc).
 
 This workshop focuses on AssemblyScript as one of two currently supported languages for contract development.
 
