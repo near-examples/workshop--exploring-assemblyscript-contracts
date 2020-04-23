@@ -135,15 +135,29 @@ Debug as many of the following problems as you can.  They are ordered by increas
 **Important Note:** 
 None of the tests were altered, only the `main.ts` contract file and / or the `model.ts` model file were changed from the original to create the problems you see in these failing tests or failures to compile the code. 
 
+### Broken Greeting
+
 - [ ] run `yarn test -f broken-greeting` and solve the issues (there are 4 of them)
+
+### Broken Counter
+
 - [ ] run `yarn test -f broken-counter` and solve the issues (there are 5 of them) 
-  - hints: 
-    - one error is preventing the code from compiling so none of the other tests are running.  solve the compiler error first so you can see the failing tests
+
+*Hints*
+
+- one error is preventing the code from compiling so none of the other tests are running.  solve the compiler error first so you can see the failing tests
+
+
+### Broken Guestbook
+
 - [ ] run `yarn test -f broken-guestbook` and solve the issues (there are several of them and many are preventing the code from compiling).  
-  - hints: 
-    - `@nearBindgen` is a decorator added to custom models so they can be serialized and stored on chain
-    - persistent collections like `PersistentVector<T>` require a type parameter which will often be the model you are trying to store on chain
-    - you can get the account name of the user that calls a function using `context.sender`
+
+*Hints*
+
+- `@nearBindgen` is a decorator added to custom models so they can be serialized and stored on chain
+- persistent collections like `PersistentVector<T>` require a type parameter which will often be the model you are trying to store on chain
+- you can get the account name of the user that calls a function using `context.sender`
+
 
 If you get really stuck on this debugging challenge and just can't get on with your day, have a look at the original working versions in section `A.scavenger-hunt` for the fixes.
 
