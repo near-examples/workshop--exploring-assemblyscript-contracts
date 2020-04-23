@@ -1,195 +1,195 @@
 ![Near, Inc. logo](https://nearprotocol.com/wp-content/themes/near-19/assets/img/logo.svg?t=1553011311)
 
-# Template for NEAR Protocol workshop activities
+# NEAR Protocol Workshop :: Exploring AssemblyScript Contracts
+
+This workshop includes several activities: 
+- a **scavenger hunt** through several AssemblyScript contracts to get you quickly oriented
+- a **debugging challenge** to fix several problems with broken contracts
+- a **design challenge** to create new contracts and related models that satisfy a set of requirements
+
+**Prerequisites**
+
+If you're already comfortable with TypeScript then reading AssemblyScript should be a breeze.  If you're coming from JavaScript, you'll have to get your head around `types` (since JavaScript doesn't have them) but reading through the samples here should not be too difficult.  If you have no programming experience then this workshop will be challenging for you -- find someone to pair with so you can stay motivated and productive.
+
+**Orientation**
+
+If you're totally new to NEAR you can [start here](https://docs.nearprotocol.com/docs/quick-start/new-to-near) with a high level overview.
+
+NEAR Protocol (aka "NEAR") is a public peer-to-peer key-value database. Public as in open to everyone for read anything and write what you are allowed to. The write permissions are defined by the access keys, so only the owner of the data can give permissions to modify the data they own.
+
+The data manipulation gets defined by stored procedures (smart contracts) in Wasm, which means that those can be implemented in any programming language compilable to Wasm (e.g. Rust, AssemblyScript, Kotlin, C, C++, Nim, Zig, etc).
+
+This workshop focuses on AssemblyScript as one of two currently supported languages for contract development.
+
+*We will not be deploying any of these contracts to the network since our focus is on learning AssemblyScript and almost all of the code presented in this workshop is also running on [live examples here](https://examples.nearprotocol.com) where you will also find the front end code that relies on these contracts.*
 
 ## Environment Setup
 
-##### IMPORTANT: Make sure you have the latest version of NEAR Shell and Node Version >= 12.x 
+1. clone this repo locally (or open using Gitpod)
+2. run `yarn` to install dependencies
+3. run `yarn test` to run tests
+4. run `yarn build` to build contracts
+5. run `yarn mock` to deploy contracts to a local mock virtual machine for testing
 
-1. [Node.js](https://nodejs.org/en/download/package-manager/)
-2. (optional) `near-shell`
+See `package.json` for more detail about these scripts.
 
-```
-npm i -g near-shell
-```
+### Filtering Tests
 
-3. (optional) yarn
-
-```
-npm i -g yarn
-```
-
-4. Clone this repo locally
-
-5. Run `yarn` in the repo folder to install dependencies
-
-## Working with contracts
-
-### To run unit tests
+You can filter tests using the following syntax
 
 ```bash
-yarn test
+yarn test -f <contract name>
+# for example
+# yarn test -f greeting
 ```
 
-### To build the contract
+### Mock Deployment
+
+You must specify the contract file and method when attempting to execute the contract in the local mock virtual machine
 
 ```bash
-yarn build
+yarn mock --wasm-file <path to contract .wasm file> --method-name <contract method name>
+# for example
+# yarn mock --wasm-file ./out/counter.wasm --method-name incrementCounter
 ```
 
-### To deploy the contract
-
-#### Locally using `mock-vm`
-
-*This command will deploy and test a specific method.  See `package.json` for details.*
+You will find the following folder structure in this repository under the `assembly` folder.
 
 ```bash
-yarn mock
+assembly
+│
+├── A.scavenger-hunt
+│   ├── 01.greeting
+│   ├── 02.wallet-example
+│   ├── 03.counter
+│   ├── 04.token-contract
+│   ├── 05.guestbook
+│   └── 06.chat
+│
+├── B.debugging-challenge
+│   ├── 01.broken-greeting
+│   ├── 03.broken-counter
+│   └── 05.broken-guestbook
+│
+└── C.design-challenge
+    ├── 01.PinkyPromise
+    ├── 02.OpenPetition
+    └── 03.BucketList
 ```
 
-*On a machine with `awk` (macOS, Linux) you can also [install `jq`](https://stedolan.github.io/jq/download/) for nicer output*
+*Note the projects are ordered by increasing complexity so lower numbers roughly implies "easier to understand".*
 
-```bash
-# Format JSON response
-yarn mock | awk 'FNR == 5 { print }' | jq '.'
+## Activity::Scavenger Hunt
 
-# Extract return value from contract call
-yarn mock | awk 'FNR == 5 { print }' | jq '.outcome.return_data'
+Find examples of the following.  Keep your own notes.  Time permitting, we will share and discuss your findings and answer questions at the end of the activity.
 
-# Extract logs from response
-yarn mock | awk 'FNR == 5 { print }' | jq '.outcome.logs'
-```
+**Orientation**
 
-#### Network deployment using `NEAR Shell`
+*Note, some of these may only take you **a few seconds** to complete so don't overthink things.  This activity is about massive exposure to several examples of smart contracts written using AssemblyScript for the NEAR platform.*
+  
+- [ ] a contract method that takes no parameters
+- [ ] a contract method that takes one parameter
+- [ ] a model used by a contract method
+- [ ] a failing unit test
+- [ ] a passing unit test
+- [ ] unit testing log output from the NEAR Virtual Machine (VM)
+- [ ] unit testing the instantiation of a model (ie. `new ModelName()`)
+- [ ] unit testing a contract method
+- [ ] unit testing a method on a model
 
-1. Login with NEAR Shell
+**Storing Data**
 
-- *You will need to install NEAR Shell first if you haven't already done so*
-- *This step will create a local `neardev` folder with the private keys of your liked NEAR account*
+- [ ] an example that includes the `@nearBindgen` decorator (used to support serialization of custom data models)
+- [ ] an example that uses `Storage` to read and / or write data from blockchain storage
+- [ ] an example that uses `PersistentVector` to store contract data in an array-like data structure
+- [ ] an example that uses `PersistentMap` to store contract data in a map-like data structure
+- [ ] an example that uses `PersistentDeque` to store contract data in a queue-like data structure
+- [ ] an example that uses `PersistentSet` to store contract data in a set-like data structure
+- [ ] an example that uses the `getPrimitive<T>()` method on the `Storage` class
+- [ ] an example that uses the `getString()` method on the `Storage` class
+- [ ] an example that uses the `setString()` method on the `Storage` class
 
-```bash
-near login
-```
+**Validation**
 
-2. Deploy the contract to the account with which you just logged in above
+- [ ] an example of using `assert()`
 
-```bash
-near deploy --accountId <contract account>
+## Activity::Debugging Challenge
 
-# for example: 
-# near deploy --accountId alice
-```
+Debug as many of the following problems as you can.  
 
-3. Verify that the contract has been deployed to the intended account by matching the value of `code_hash` with the one in the JSON snippet below (`31ronb...`)
+**Important Note:** none of the tests were altered, only the `main.ts` contract file and / or the `model.ts` model file were changed from the original.   
 
-```bash
-near state <contract account>  
-```
+- [ ] run `yarn test -f broken-greeting` and solve the issues (there are 4 of them)
+- [ ] run `yarn test -f broken-counter` and solve the issues (there are 5 of them) 
+  - hints: 
+    - one error is preventing the code from compiling so none of the other tests are running.  solve the compiler error first so you can see the failing tests
+- [ ] run `yarn test -f broken-guestbook` and solve the issues (there are several of them and many are preventing the code from compiling).  
+  - hints: 
+    - `@nearBindgen` is a decorator added to custom models so they can be serialized and stored on chain
+    - persistent collections like `PersistentVector<T>` require a type parameter which will often be the model you are trying to store on chain
+    - you can get the account name of the user that calls a function using `context.sender`
 
-```json
-{
-   "amount":"118836499627857616221445000",
-   "locked":"0",
-   "code_hash":"31ronb4A7DvktTa8sQCmPwT7FBg6qYMH3dM1fCPuSpQW",
-   "storage_usage":13312,
-   "storage_paid_at":0,
-   "block_height":924926,
-   "block_hash":"9yemJLcqLPCTiRNQmZK36M2BbDPPkTDPYKNeEGtt83JK",
-   "formattedAmount":"118.836499627857616221445"
-}
-```
+If you get really stuck on this debugging challenge and just can't get on with your day, have a look at the original working versions in section `A.scavenger-hunt` for the fixes.
 
-### To invoke methods on a deployed contract
+## Activity::Design Challenge
 
-- *Signer account may be the same as contract account for testing but will almost certainly **not be the same** in production*
-- *See `assembly/main.ts` for available contract methods*
-
-```bash
-near call <contract account> <contract method> --accountId <signer account>
-
-# for example: 
-# near call alice sayMyName --accountId alice
-```
-
-## Walkthrough
-
-### Ecosystem
-
-This project is intended to operate within the NEAR ecosystem.  A few basic assumptions are:
-
-- Accounts on NEAR are human readable names. 
-  - Accounts maintain their own storage for which they pay rent in $NEAR tokens
-  - Each account may have 1 contract deployed to its storage.  
-    - Subsequent deployments overwrite contract code without affecting storage (this can cause confusion if the shape or nature of your data changes but names (ie. collection prefix) remain the same)
-    - An account without a contract will report 
-  - You can read [more about accounts here](https://docs.nearprotocol.com/docs/concepts/account)
-
-- Contracts must be deployed to one (or more) specific account(s)
-  - For a family of contracts, account names can be scoped as `contract1.myapp`, `contract2.myapp`
-
-- To call methods on deployed contracts we have a choice of tools and interfaces
-  - RPC ([see here](https://docs.nearprotocol.com/docs/interaction/rpc))
-  - `near-api-js` ([see here](https://near.github.io/near-api-js/classes/_account_.account.html#functioncall))
-  - `NEAR Shell` ([see here](https://docs.nearprotocol.com/docs/development/near-clitool))
-
-- To run contracts in a local mock vm you can use `yarn mock`
-
-### Filesystem
-
-```bash
-   ├── README.md               # this file
-   ├── as-pect.config.js       # configuration for as-pect
-   ├── asconfig.js             # AssemblyScript contract build script
-   ├── assembly                # AssemblyScript contract 
-   │   ├── __tests__
-   │   │   ├── as-pect.d.ts    # header file for as-pect type detection
-*  │   │   └── main.spec.ts    # AssemblyScript contract unit tests
-   │   ├── as_types.d.ts       # header file for AssemblyScript type detection
-*  │   ├── main.ts             # AssemblyScript contract
-   │   └── tsconfig.json       # TypeScript config
-   ├── package.json            # Node.js package manager
-   └── yarn.lock               # Yarn lock file
-```
-
-The two critical files in this project are marked with an asterisk (`*`) in the tree view above.  They are:
-- `assembly/__tests__/main.spec.ts` (contract unit tests)
-- `assembly/main.ts` (the contract)
-
-The rest of the files support the development, testing and deployment of the contract
-
-### `yarn`
-
-[![asciicast](https://asciinema.org/a/hYujvtaaO3ol9FTkzt9lOnH2j.svg)](https://asciinema.org/a/hYujvtaaO3ol9FTkzt9lOnH2j)
-
-### `yarn test`
-
-[![asciicast](https://asciinema.org/a/gLwYhhzPYQyW2wICQtbbz06Ph.svg)](https://asciinema.org/a/gLwYhhzPYQyW2wICQtbbz06Ph)
-
-### `yarn build`
-
-The build process is configured in the file `asconfig.js`.  Here you will find a few compiler optimizations as per the [AssemblyScript compiler docs](https://docs.assemblyscript.org/details/compiler).
-
-#### Size & Speed Optimized (default)
-
-```
- 12K	out/main.wasm     (40% reduction in contract size for this contract)
- 48K	out/main.wat
-```
-
-[![asciicast](https://asciinema.org/a/qPz0GYYwHRkzYkQ4kj8xpUmJM.svg)](https://asciinema.org/a/qPz0GYYwHRkzYkQ4kj8xpUmJM)
-
-#### Non Optimized
-
-```
- 20K	out/main.wasm
-104K	out/main.wat
-```
-
-*This can be useful for a more readable `WAT` file*
-
-[![asciicast](https://asciinema.org/a/I9UJri2aVKLaBfV4ZPv6EIVnk.svg)](https://asciinema.org/a/I9UJri2aVKLaBfV4ZPv6EIVnk)
+Choose one of the following projects and write the model(s) and contract(s) that satisfy the following requirements.  Include unit tests of course.  Test everything locally using `yarn mock`.
 
 
-### `yarn mock`
+### PinkyPromise
 
-[![asciicast](https://asciinema.org/a/uZdUCabC81di5zpVFTNvEaVns.svg)](https://asciinema.org/a/uZdUCabC81di5zpVFTNvEaVns)
+*(inspired by a public hackathon project)*
+
+PinkyPromise is a system for recording promises on the blockchain for all to see, forever and ever.  A promise is a piece of text that is made `from` someone `to` someone (possibly themselves).  A promise may eventually be marked as `kept` or `broken` by the owner of the `to` account.
+   - Models
+     - `PinkyPromise`
+       - Collects a commitment (as string) between two accounts (as strings).  Consider whether to use `Storage` directly (our on-chain key-value store) or one of the persistent collections that wraps `Storage` to mimic a Vector, Map, Queue or Set.
+   - Contracts
+     - `main`
+       - `makePromise(to: string, statement: string)` 
+
+
+### BucketList
+
+*(inspired by Covid-19)*
+
+BucketList is a system that records things we wish we all could do as soon as it's safe to go back outside.  
+
+**Models**
+
+- `Activity` represents something we want to do
+  - `description` as `string`
+  - `cost` as `u8` (let's keep it small since these are frugal times)
+  - `friends` as `PersistentVector<string>` of account names of our friends, if we have any
+
+**Contracts**
+
+- `main`
+  - `add(item: string, friends: string[], cost: u8): bool`
+  - `list(): Activity[]`
+
+### OpenPetition
+
+*(inspired by an internal hackathon project)*
+
+OpenPetition is a system for managing the creation and support of petitions (ie. Change.org for blockchain).
+**Models**
+
+- `Petition`
+  - Collects signatures (`context.sender`) in a `PersistentVector<string>` for anyone that calls the main contract's `sign` method, passing in the petition identifier.
+  - The Petition model should include Petition metadata like 
+    - `title` as `string`
+    - `body` as `string` and 
+    - `funding` as `u128`
+
+**Contracts**
+
+- `main` 
+  - `sign(petitionId: string): bool` allows the `context.sender` to sign the petition
+  - `list(): Array<string>` returns a list of petition identifiers
+  - `show(petitionId: string): Petition` returns the details of a petition
+  - `contract.petitions` could be the collection of petitions stored as a `PersistentMap<string, Petition>` where the key is petition identifier and the value is the petition instance
+
+**Stretch Goals**
+
+- Consider how you would structure this project if each petition were its own contract instead of a model on a single contract.  What could the benefits of this be?
