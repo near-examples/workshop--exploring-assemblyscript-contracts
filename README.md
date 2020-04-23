@@ -115,7 +115,7 @@ NEAR Protocol stores data in a key-value store called `Storage` which is also wr
 
 **Contract Context**
 
-NEAR Protocol requires that each account only have 1 contract deployed to its storage.  The account maintains a copy of the contract code as well as any state storage consumed by the contract.  You can read more about [accounts on the NEAR platform here](https://docs.nearprotocol.com/docs/concepts/account).
+NEAR Protocol accounts are initially created without an associated contract.  Each account can have a maximum of 1 contract deployed to its storage. The account maintains a copy of the contract code as well as any state storage consumed by the contract.  You can read more about [accounts on the NEAR platform here](https://docs.nearprotocol.com/docs/concepts/account).
 
 - [ ] an example of using `context.sender` which represents the account that signed the current transaction  
 - [ ] an example of a unit test where the test explicitly sets the `signer_account_id` to control `context.sender`

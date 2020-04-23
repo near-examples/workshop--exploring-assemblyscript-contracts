@@ -117,7 +117,7 @@ This project is intended to operate within the NEAR ecosystem.  A few basic assu
 
 - Accounts on NEAR are human readable names. 
   - Accounts maintain their own storage for which they pay rent in $NEAR tokens
-  - Each account may have 1 contract deployed to its storage.  
+  - Each account may have 0 or 1 contract deployed to its storage.  
     - Subsequent deployments overwrite contract code without affecting storage (this can cause confusion if the shape or nature of your data changes but names (ie. collection prefix) remain the same)
     - An account without a contract will report 
   - You can read [more about accounts here](https://docs.nearprotocol.com/docs/concepts/account)
