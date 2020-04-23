@@ -1,0 +1,24 @@
+{
+  "name": "activity-TEMPLATE",
+  "version": "0.0.1",
+  "description": "Learn to develop contracts for NEAR Protocol using AssemblyScript",
+  "author": "Sherif Abushadi <sherif@nearprotocol.com>",
+  "license": "MIT",
+  "scripts": {
+    "mock:deploy:contract": "yarn near-vm --wasm-file ./out/main.wasm --method-name sayMyName",
+    "build:contract": "node asconfig.js",
+    "test:contract": "asp --verbose",
+    "mock": "yarn mock:deploy:contract",
+    "build": "yarn build:contract",
+    "test": "yarn test:contract"
+  },
+  "devDependencies": {
+    "assemblyscript": "^0.9.4",
+    "near-sdk-as": "^0.2.0",
+    "near-shell": "^0.20.8",
+    "near-vm": "^0.0.3"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}
