@@ -139,27 +139,37 @@ None of the tests were altered, only the `main.ts` contract file and / or the `m
 
 - [ ] run `yarn test -f broken-greeting` and solve the issues (there are 4 of them)
 
+<details>
+  <summary><em>Reveal hints</em></summary>
+  <ul>
+    <li>try running this in your console from the root of the project<br><code>diff assembly/A.scavenger-hunt/01.greeting/main.ts assembly/B.debugging-challenge/01.broken-greeting/main.ts</code></li>
+  </ul>
+</details>
+
 ### Broken Counter
 
 - [ ] run `yarn test -f broken-counter` and solve the issues (there are 5 of them) 
 
-*Hints*
-
-- one error is preventing the code from compiling so none of the other tests are running.  solve the compiler error first so you can see the failing tests
-
+<details>
+  <summary><em>Reveal hints</em></summary>
+  <ul>
+    <li>one error is preventing the code from compiling so none of the other tests are running.  solve the compiler error first so you can see the failing tests</li>
+    <li>try running this in your console from the root of the project<br><code>diff assembly/A.scavenger-hunt/03.counter/main.ts assembly/B.debugging-challenge/03.broken-counter/main.ts</code></li>
+  </ul>
+</details>
 
 ### Broken Guestbook
 
 - [ ] run `yarn test -f broken-guestbook` and solve the issues (there are several of them and many are preventing the code from compiling).  
 
-*Hints*
-
-- `@nearBindgen` is a decorator added to custom models so they can be serialized and stored on chain
-- persistent collections like `PersistentVector<T>` require a type parameter which will often be the model you are trying to store on chain
-- you can get the account name of the user that calls a function using `context.sender`
-
-
-If you get really stuck on this debugging challenge and just can't get on with your day, have a look at the original working versions in section `A.scavenger-hunt` for the fixes.
+<details>
+  <summary><em>Reveal hints</em></summary>
+  <li><code>@nearBindgen</code> is a decorator added to custom models so they can be serialized and stored on chain</li>
+  <li>persistent collections like <code>PersistentVector<T></code>require a type parameter which will often be the model you are trying to store on chain</li>
+  <li>you can get the account name of the user that calls a function using <code>context.sender</code></li>
+  <li>try running this in your console from the root of the project<br><code>diff assembly/A.scavenger-hunt/05.guestbook/main.ts assembly/B.debugging-challenge/05.broken-guestbook/main.ts</code></li>
+  <li>try running this in your console from the root of the project<br><code>diff assembly/A.scavenger-hunt/05.guestbook/model.ts assembly/B.debugging-challenge/05.broken-guestbook/model.ts</code></li>
+</details>
 
 ## Activity::Design Challenge
 
