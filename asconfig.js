@@ -1,31 +1,39 @@
 const compile = require("near-sdk-as/compiler").compile
 
-function compileContract(name) {
-
-  compile(`assembly/${name}/main.ts`,       // input file
-          `out/${name}.wasm`,               // output file
-          [                                 // add optional args here
-
-            // "-O3z",                      // Optimize for size and speed
-            "--debug",                      // Shows debug output
-            // "--measure",                 // Shows compiler run time
-            "--validate"                    // Validate the generated wasm module
-
-          ], {
-            verbose: false                  // Output the cli args passed to asc
-          });
-}
-
 const fs = require('fs')
 const path = require('path')
 
-const getDirectories = srcPath => fs.readdirSync(srcPath).filter(file => fs.statSync(path.join(srcPath, file)).isDirectory())
-const dirs = getDirectories(path.resolve(__dirname, "assembly")).filter(dir => dir !== "__tests__")
+function readDirR(dir) {
+  return fs.statSync(dir).isDirectory() ? [Array.prototype].concat(...fs.readdirSync(dir).map(f => readDirR(path.join(dir, f)))) :
+    dir;
+}
 
-dirs.map(dir => {
-  console.log(`\ncompiling contract [ ${dir}/main.ts ] to [ out/${dir}.wasm ]`)
-  compileContract(dir)
-})
+readDirR(path.resolve(__dirname, "assembly"))   // only AssemblyScript files
+  .filter(fqPath => fqPath.includes("A."))      // in the A.scavenger-hunt folder
+  .filter(fqPath => fqPath.includes("main.ts")) // just the contracts entry point
+  .map(compileContract)
+
+function compileContract(fqPath) {
+  const folder = path.dirname(fqPath).split("/").pop() // 01.greeting
+  const output = folder.split(".")[1] // greeting
+
+  console.log(`\ncompiling contract [ ${folder}/main.ts ] to [ out/${output}.wasm ]`)
+
+  compile(`${fqPath}`,                // input file
+          `out/${output}.wasm`,       // output file
+          [                           // add optional args here
+
+            // "-O3z",                // Optimize for size and speed
+            "--debug",                // Shows debug output
+            // "--measure",           // Shows compiler run time
+            "--validate"              // Validate the generated wasm module
+
+          ], 
+          {
+            verbose: false            // Output the cli args passed to asc
+          }
+  );
+}
 
 /**************************************************************
   NEAR relies on AssemblyScript to optimize file size and 
