@@ -1,0 +1,13 @@
+Using options: {
+  accountId: '',
+  networkId: 'default',
+  nodeUrl: 'https://rpc.testnet.nearprotocol.com',
+  contractName: 'greeting.',
+  walletUrl: 'https://wallet.testnet.nearprotocol.com',
+  helperUrl: 'https://helper.testnet.nearprotocol.com',
+  gas: '100000000000000',
+  amount: '0',
+  methodName: 'sayMyName',
+  initialBalance: null
+}
+Scheduling a call: greeting..sayMyName()

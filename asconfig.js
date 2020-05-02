@@ -21,7 +21,7 @@ switch (mode) {
   case __filename:
     // we're using main package.json so build all contracts matching filters below
 
-      scanProjects().map(compileOptimized);
+    scanProjects().map(compileOptimized);
 
     break;
 
@@ -70,10 +70,15 @@ function compileOptimized(fqPath, { relPath = "" }) {
       "--validate",                                     // validate the generated wasm module
       "--runPasses",
       "inlining-optimizing,dce",                        // inlines to optimize and removes deadcode
+      "--measure",                                      // shows compiler run time
     ],
     { verbose: false }                                  // output the cli args passed to asc
   );
+
+  reportFilesize(`${relPath}out/${output}.wasm`)
 }
+
+
 
 /**
  * Compiles the most readable Wasm file and WAT file for learning and readability
@@ -90,11 +95,13 @@ function compileReadable(fqPath, { relPath = "" }) {
     fqPath,                                             // input file
     `out/${output}.wasm`,                               // output file
     [
-      "--measure",                                      // shows compiler run time
       "--validate",                                     // validate the generated wasm module
+      "--measure",                                      // shows compiler run time
     ],
-    { verbose: true }                                   // output the cli args passed to asc
+    { verbose: false }                                  // output the cli args passed to asc
   );
+
+  
 }
 
 /**
@@ -120,6 +127,12 @@ function reportProgress(folder, output, includeWAT) {
   );
 }
 
+
+function reportFilesize(fqPath) {
+  const stats = fs.statSync(fqPath);
+  console.log( `Filesize  : ${stats.size / 1000.0}kb` );
+
+}
 
 function scanProjects(){
   return readDirR(path.resolve(__dirname, "assembly"))          // only AssemblyScript files

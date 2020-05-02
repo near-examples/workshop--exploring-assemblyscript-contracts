@@ -7,10 +7,12 @@
   "scripts": {
     "build": "yarn build:contract",
     "build:contract": "node asconfig.js",
-    "test": "yarn test:1:unit:contract",
-    "test:1:unit:contract": "asp --verbose",
-    "test:2:simulate:contract": "yarn near-vm",
-    "test:3:integrate:contract": "yarn near deploy"
+    "clean": "rm -rf ./out",
+    "test": "yarn test:unit",
+    "test:unit": "asp --verbose",
+    "test:simulate": "yarn near-vm",
+    "test:simulate:greeting": "yarn test:simulate --wasm-file out/greeting.wasm",
+    "test:integrate": "yarn near deploy"
   },
   "devDependencies": {
     "assemblyscript": "^0.9.4",
