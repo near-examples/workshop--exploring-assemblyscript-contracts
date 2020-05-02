@@ -1,0 +1,8 @@
+{
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn build:contract",
+    "build:contract": "node ../../../asconfig.js $(pwd)",
+    "clean": "rm -rf ./out"
+  }
+}

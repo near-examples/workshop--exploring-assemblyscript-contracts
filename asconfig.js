@@ -1,86 +1,114 @@
-const compile = require("near-sdk-as/compiler").compile
+const fs = require("fs");
+const path = require("path");
+const util = require("util");
 
-const fs = require('fs')
-const path = require('path')
+const compile = require("near-sdk-as/compiler").compile;
+const asc = require("near-sdk-as/compiler").asc;
+/**
+ * This file chooses one of two ways to compile AssemblyScript contracts
+ *
+ * - compileReadable() produces an unoptimized Wasm and WAT file for exploration
+ * - compileOptimized() produces a highly optimized Wasm file to minimize on-chain execution costs
+ */
 
-function readDirR(dir) {
-  return fs.statSync(dir).isDirectory() ? [Array.prototype].concat(...fs.readdirSync(dir).map(f => readDirR(path.join(dir, f)))) :
-    dir;
+const mode = process.argv.pop();
+switch (mode) {
+  case __filename:
+    // we're using main package.json so build all contracts matching filters below
+
+    readDirR(path.resolve(__dirname, "assembly"))       // only AssemblyScript files
+      .filter((fqPath) => fqPath.includes("A."))        // in the A.scavenger-hunt folder
+      .filter((fqPath) => fqPath.includes("main.ts"))   // just the contract entry points
+      .map(compileOptimized);
+
+    break;
+
+  case process.cwd():
+    // we're using a specific contract package.json
+    // we know this because we've appended $(pwd) to yarn build for each contract in its local package.json
+
+    compileReadable(`${process.cwd()}/main.ts`, { relPath: "../../../" });
+
+    break;
+
+  default:
+    throw new Error(
+      `Unexpected condition in build process.\nLast argument was [${mode}]`
+    );
 }
 
-readDirR(path.resolve(__dirname, "assembly"))   // only AssemblyScript files
-  .filter(fqPath => fqPath.includes("A."))      // in the A.scavenger-hunt folder
-  .filter(fqPath => fqPath.includes("main.ts")) // just the contracts entry point
-  .map(compileContract)
+process.exit(0);
 
-function compileContract(fqPath) {
-  const folder = path.dirname(fqPath).split("/").pop() // 01.greeting
-  const output = folder.split(".")[1] // greeting
+// ----------------------------------------------------------------------------
+// Helper functions for the code above
+// ----------------------------------------------------------------------------
 
-  console.log(`\ncompiling contract [ ${folder}/main.ts ] to [ out/${output}.wasm ]`)
+/**
+ * Compiles the most cost-effective Wasm file for deployment to NEAR Protocol
+ * @param {string} fqPath
+ * @param {object} options currently `relPath` to help direct files to the right output folder
+ */
+function compileOptimized(fqPath, { relPath = "" }) {
+  const folder = path.dirname(fqPath).split("/").pop(); // 01.greeting
+  const output = folder.split(".")[1];                  // greeting
 
-  compile(`${fqPath}`,                // input file
-          `out/${output}.wasm`,       // output file
-          [                           // add optional args here
+  reportProgress(folder, output, false);
 
-            // "-O3z",                // Optimize for size and speed
-            "--debug",                // Shows debug output
-            // "--measure",           // Shows compiler run time
-            "--validate"              // Validate the generated wasm module
-
-          ], 
-          {
-            verbose: false            // Output the cli args passed to asc
-          }
+  asc.main(
+    [
+      fqPath,
+      "--binaryFile",
+      `${relPath}out/${output}.wasm`,
+      "-O3z",                                           // optimize for size and speed
+      "--validate",                                     // validate the generated wasm module
+      "--runPasses",
+      "inlining-optimizing,dce",                        // inlines to optimize and removes deadcode
+    ],
+    { verbose: false }                                  // output the cli args passed to asc
   );
 }
 
-/**************************************************************
-  NEAR relies on AssemblyScript to optimize file size and 
-  execution speed which makes for more cost effective contracts
-***************************************************************
+/**
+ * Compiles the most readable Wasm file and WAT file for learning and readability
+ * @param {string} fqPath
+ * @param {object} options currently `relPath` to help direct files to the right output folder
+ */
+function compileReadable(fqPath, { relPath = "" }) {
+  const folder = path.dirname(fqPath).split("/").pop(); // 01.greeting
+  const output = folder.split(".")[1];                  // greeting
 
-To make the contract in this project as small and fast as 
-possible just add the following optional argument to the 
-compile() methods 3rd argument, the array of optional args
+  reportProgress(folder, output, true);
 
--O3z --converge
+  compile(
+    fqPath,                                             // input file
+    `out/${output}.wasm`,                               // output file
+    [
+      "--measure",                                      // shows compiler run time
+      "--validate",                                     // validate the generated wasm module
+    ],
+    { verbose: true }                                   // output the cli args passed to asc
+  );
+}
 
-So the above call to compile() would change to this: 
+/**
+ * List all files in a directory recursively in a synchronous fashion
+ * adapted from https://gist.github.com/kethinov/6658166#gistcomment-2109513
+ * @param {string} dir top level to begin recursive descent through all subfolders
+ */
+function readDirR(dir) {
+  return fs.statSync(dir).isDirectory()
+    ? [].concat(...fs.readdirSync(dir).map((f) => readDirR(path.join(dir, f))))
+    : dir;
+}
 
-compile("assembly/main.ts", // input file
-        "out/main.wasm",    // output file
-        [                   // add optional args here
-
-          "-O3z"            // Optimize for size and speed
-          "--converge"      // Converges on maximal optimization
-
-          "--debug",        // Shows debug output
-          "--measure",      // Shows compiler run time
-          "--validate"      // Validate the generated wasm module
-        ], {
-          verbose: false    // Output the cli args passed to asc
-        });
-
-***************************************************************
-
-All optional arguments are documented on this page 
-https://docs.assemblyscript.org/details/compiler
-
-with the relevant example about optimizing for size and speed 
-included below as well
-
---optimize, -O    Optimizes the module.Typical shorthands are:
-
-                  Default optimizations   -O / -O3s
-                  Make a release build    -O --noAssert
-                  Make a debug build      --debug
-                  Optimize for speed      -O3
-                  Optimize for size       -O3z --converge
-
---optimizeLevel   How much to focus on optimizing code.[0 - 3]
---shrinkLevel     How much to focus on shrinking code size.[0 - 2, s = 1, z = 2]
---converge        Re-optimizes until no further improvements can be made.
---noAssert        Replaces assertions with just their value without trapping
-
-*/
+/**
+ * Formats compiler output nicely
+ */
+function reportProgress(folder, output, includeWAT) {
+  const padding = includeWAT ? 0 : 20 - folder.length;
+  console.log(
+    `compiling contract [ ${folder}/main.ts${" ".padStart(
+      padding
+    )}] to [ out/${output}.${includeWAT ? "{wasm,wat}" : "wasm"} ] `
+  );
+}

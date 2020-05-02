@@ -5,18 +5,18 @@
   "author": "Sherif Abushadi <sherif@nearprotocol.com>",
   "license": "MIT",
   "scripts": {
-    "mock:deploy:contract": "yarn near-vm",
-    "build:contract": "node asconfig.js",
-    "test:contract": "asp --verbose",
-    "mock": "yarn mock:deploy:contract",
     "build": "yarn build:contract",
-    "test": "yarn test:contract"
+    "build:contract": "node asconfig.js",
+    "test": "yarn test:1:unit:contract",
+    "test:1:unit:contract": "asp --verbose",
+    "test:2:simulate:contract": "yarn near-vm",
+    "test:3:integrate:contract": "yarn near deploy"
   },
   "devDependencies": {
     "assemblyscript": "^0.9.4",
-    "near-sdk-as": "^0.2.0",
-    "near-shell": "^0.20.9",
-    "near-vm": "^0.0.3"
+    "near-sdk-as": "^0.2.2-10",
+    "near-shell": "^0.21.0",
+    "near-vm": "^0.0.8"
   },
   "engines": {
     "node": ">=12.0.0"
