@@ -207,15 +207,15 @@ Run the following commands to simulate calling the method `sayMyName` on this co
 
 1. First compile (or recompile after changes) the optimized `.wasm` file
 
-	```text
-	yarn build greeting
-	```
+   ```text
+   yarn build greeting
+   ```
 
 2. Then run a simulation test
 
-	```text
-	yarn test:simulate:greeting --method-name sayMyName
-	```
+   ```text
+   yarn test:simulate:greeting --method-name sayMyName
+   ```
 
 You should see something like the following response
 
@@ -235,12 +235,10 @@ Which can be reformatted for easier scanning
     "storage_usage": 100,
     "return_data": {
       "Value": "\"Hello, bob!\""
-    }, 
+    },
     "burnt_gas": 41812607821,
     "used_gas": 41812607821,
-    "logs": [
-      "sayMyName() was called"
-    ]
+    "logs": ["sayMyName() was called"]
   },
   "err": null,
   "receipts": [],
@@ -249,9 +247,9 @@ Which can be reformatted for easier scanning
 ```
 
 > **Notes**
-> 
-> - The value in `return_data` is what we expect if our account name were "bob".  But how did that get there?  Run `near-vm --help` to see simulation options including control over contract state and execution context as well as network economics.
-> - The amounts of `burnt_gas` and `used_gas` are the same, so why two different values?  `used_gas` >= `burnt_gas` is always true. If ever a difference, it will be refunded back to the originating account. [See SO for more](https://stackoverflow.com/a/59146364).
+>
+> - The value in `return_data` is what we expect if our account name were "bob". But how did that get there? Run `near-vm --help` to see simulation options including control over contract state and execution context as well as network economics.
+> - The amounts of `burnt_gas` and `used_gas` are the same, so why two different values? `used_gas` >= `burnt_gas` is always true. If ever a difference, it will be refunded back to the originating account. [See SO for more](https://stackoverflow.com/a/59146364).
 > - The entry in `logs` is exactly what we would expect to see.
 > - The contract `state` is empty.
 
@@ -273,9 +271,7 @@ After reformatting, you should see something like the following response
     "return_data": "None",
     "burnt_gas": 49055516114,
     "used_gas": 49055516114,
-    "logs": [
-      "saveMyName() was called"
-    ]
+    "logs": ["saveMyName() was called"]
   },
   "err": null,
   "receipts": [],
@@ -286,11 +282,11 @@ After reformatting, you should see something like the following response
 ```
 
 > **Notes**
-> 
+>
 > - The absence of value in `return_data` since `saveMyName` has a return type of `void`.
-> - The amount of `used_gas` is higher now, by about 7.2 billion units.  This difference represents more compute time required to fetch an account name from the `context` object as well as reading and writing to storage
+> - The amount of `used_gas` is higher now, by about 7.2 billion units. This difference represents more compute time required to fetch an account name from the `context` object as well as reading and writing to storage
 > - The entry in `logs` is exactly what we would expect to see.
-> - This time the contract `state` is not empty.  It has 1 entry, a `key : value` pair, that is encoded as Base64 and, when decoded looks like this: `{"sender":"bob"}`.
+> - This time the contract `state` is not empty. It has 1 entry, a `key : value` pair, that is encoded as Base64 and, when decoded looks like this: `{"sender":"bob"}`.
 
 ---
 
@@ -307,9 +303,9 @@ console.log(utf8);
 
 You may have noticed that the words `contract` and `account` are sometimes interchangeable in this context. This is because NEAR accounts can only hold zero or one contracts while contracts can be deployed to any number of accounts.
 
-In the previous sections, since we were still testing and simulating and had not deployed anything to the network, the words `contract` and `account` were basically the same. 
+In the previous sections, since we were still testing and simulating and had not deployed anything to the network, the words `contract` and `account` were basically the same.
 
-In the next section about integration tests we will deploy the contract to a specific account (ie. the "contract account") on the network (ie. TestNet) and start calling the contract methods from a **different** account (ie. our "user account").  This is when the distinction between the words `contract` and `account` will become useful and important.
+In the next section about integration tests we will deploy the contract to a specific account (ie. the "contract account") on the network (ie. TestNet) and start calling the contract methods from a **different** account (ie. our "user account"). This is when the distinction between the words `contract` and `account` will become useful and important.
 
 You can read more about [accounts on NEAR Protocol here](https://docs.nearprotocol.com/docs/concepts/account).
 
@@ -322,22 +318,19 @@ There are two types of integration tests we can expect to use:
 - **NEAR Shell** serves as a console swiss army knife with the ability to manage accounts, contracts and more
 - **`near-api-js`** (our JavaScript API) wraps the NEAR JSON RPC API and exposes NEAR Wallet authentication
 
-Only the first, using NEAR Shell, will be addressed here. It's key limitation is that we cannot orchestrate cross-contract calls.  We will use NEAR Shell to create new accounts for contracts before we deploy, verify, and invoke methods on those contracts and finally deleting the contract accounts to clean up after ourselves.  We will rely on other tools like [NEAR Explorer](https://explorer.nearprotocol.com/) for transaction visibilty, history and more.
+Only the first, using NEAR Shell, will be addressed here. It's key limitation is that we cannot orchestrate cross-contract calls. We will use NEAR Shell to create new accounts for contracts before we deploy, verify, and invoke methods on those contracts and finally deleting the contract accounts to clean up after ourselves. We will rely on other tools like [NEAR Explorer](https://explorer.nearprotocol.com/) for transaction visibilty, history and more.
 
 **HEADS UP** -- if this is your first time using NEAR Shell to deploy a contract to TestNet, this may feel like a long and confusing process but once you've done it 3 times, it should only take about a minute from end to end and can be automated in a shell script.
 
-
 But first the tldr; for anyone who wants to start running before they walk.
-
 
 ---
 
 **tldr;**
 
-We use the symbol `<???>` to represent text that is  **unique to your account name**, whatever that is (or will be when you make it up). After this brief list of steps, each of these commands is described in greater detail including expected output and possible errors. 
+We use the symbol `<???>` to represent text that is **unique to your account name**, whatever that is (or will be when you make it up). After this brief list of steps, each of these commands is described in greater detail including expected output and possible errors.
 
 Note that all of this happening **on the command line.**
-
 
 **(0) Confirm NEAR Shell is installed**
 
@@ -405,9 +398,9 @@ Starting deployment. Account id: greeting.<???>.testnet, node: https://rpc.testn
 ```
 
 **(5) Verify deployment of the correct contract to the intended**
- 
+
 - The account name `greeting.<???>.testnet` should match the intended contract account
-- The value of `code_hash` should match _exactly_ (starting with `63tSDQ...`) **unless the contract code has changed**, in which case it will almost certainly be different. 
+- The value of `code_hash` should match _exactly_ (starting with `63tSDQ...`) **unless the contract code has changed**, in which case it will almost certainly be different.
 - Other values in this response are unlikely to match
 
 ```text
@@ -422,19 +415,18 @@ Account greeting.<???>.testnet
 
 ```json
 {
-   "amount":"99999999949722583262485000",
-   "locked":"0",
-   "code_hash":"63tSDQc9K5Nt9C8b1HDkv3VBnMFev9hXB589dZ9adsKA",
-   "storage_usage":14912,
-   "storage_paid_at":0,
-   "block_height":2048367,
-   "block_hash":"AbYg6aAbv4e1h2rwKG2vMsWphXm27Ehhde6xUKYzYjsT",
-   "formattedAmount":"99.999999949722583262485"
+  "amount": "99999999949722583262485000",
+  "locked": "0",
+  "code_hash": "63tSDQc9K5Nt9C8b1HDkv3VBnMFev9hXB589dZ9adsKA",
+  "storage_usage": 14912,
+  "storage_paid_at": 0,
+  "block_height": 2048367,
+  "block_hash": "AbYg6aAbv4e1h2rwKG2vMsWphXm27Ehhde6xUKYzYjsT",
+  "formattedAmount": "99.999999949722583262485"
 }
 ```
 
 **(6) For each method of the contract, test it and observe the response**
-
 
 **Test `showYouKnow()`**
 
@@ -534,6 +526,4 @@ Account greeting.<???>.testnet for network "default" was deleted.
 
 ```
 
-
 **END tldr;**
-
