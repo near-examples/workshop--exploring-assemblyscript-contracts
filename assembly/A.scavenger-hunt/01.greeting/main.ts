@@ -2,7 +2,7 @@ import { context, logging, storage } from "near-sdk-as";
 
 /**
  * This is a `view` function that returns transaction signer's account name
- * and appends to the log
+ * and appends to the log.  We chose a return type of string.
  */
 export function sayMyName(): string {
   logging.log("sayMyName() function was called");
@@ -11,7 +11,7 @@ export function sayMyName(): string {
 
 /**
  * This is a `call` function that saves the transaction signer's account name
- * to storage and appends to the log
+ * to storage and appends to the log.  We chose to return no data.
  */
 export function saveMyName(): void {
   logging.log("saveMyName() function was called");
