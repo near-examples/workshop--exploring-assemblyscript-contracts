@@ -8,7 +8,7 @@ package-lock.json
 /out
 
 #keys
-/neardev
+**/neardev
 
 # testing
 /coverage
