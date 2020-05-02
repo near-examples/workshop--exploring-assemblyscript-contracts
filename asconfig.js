@@ -4,6 +4,10 @@ const util = require("util");
 
 const compile = require("near-sdk-as/compiler").compile;
 const asc = require("near-sdk-as/compiler").asc;
+
+// main folder that includes all projects used in this workshop
+const PROJECTS_DIR = "scavenger-hunt"
+
 /**
  * This file chooses one of two ways to compile AssemblyScript contracts
  *
@@ -12,14 +16,12 @@ const asc = require("near-sdk-as/compiler").asc;
  */
 
 const mode = process.argv.pop();
+
 switch (mode) {
   case __filename:
     // we're using main package.json so build all contracts matching filters below
 
-    readDirR(path.resolve(__dirname, "assembly"))       // only AssemblyScript files
-      .filter((fqPath) => fqPath.includes("A."))        // in the A.scavenger-hunt folder
-      .filter((fqPath) => fqPath.includes("main.ts"))   // just the contract entry points
-      .map(compileOptimized);
+      scanProjects().map(compileOptimized);
 
     break;
 
@@ -32,9 +34,14 @@ switch (mode) {
     break;
 
   default:
-    throw new Error(
-      `Unexpected condition in build process.\nLast argument was [${mode}]`
-    );
+    const projects = projectsNames()
+    if(Object.keys(projects).includes(mode)) {
+      compileOptimized(projects[mode], {})
+    } else {
+      throw new Error(
+        `Unexpected condition in build process.\nLast argument was [${mode}]`
+      );
+    }
 }
 
 process.exit(0);
@@ -111,4 +118,21 @@ function reportProgress(folder, output, includeWAT) {
       padding
     )}] to [ out/${output}.${includeWAT ? "{wasm,wat}" : "wasm"} ] `
   );
+}
+
+
+function scanProjects(){
+  return readDirR(path.resolve(__dirname, "assembly"))          // only AssemblyScript files
+          .filter((fqPath) => fqPath.includes(PROJECTS_DIR))    // in the A.scavenger-hunt folder
+          .filter((fqPath) => fqPath.includes("main.ts"))       // just the contract entry points
+}
+
+function projectsNames() {
+  const projects = scanProjects();
+  const re = new RegExp(`${PROJECTS_DIR}\/\\d{2}.([A-Za-z]*)`);
+  return projects.reduce((result, path) => {
+    let match = path.match(re);
+    result[match[1]] = match.input
+    return result
+  }, {});
 }
