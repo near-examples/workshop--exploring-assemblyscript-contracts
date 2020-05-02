@@ -103,7 +103,7 @@ function compileReadable(fqPath, { relPath = "" }) {
 /**
  * List all files in a directory recursively in a synchronous fashion
  * adapted from https://gist.github.com/kethinov/6658166#gistcomment-2109513
- * @param {string} dir top level to begin recursive descent through all subfolders
+ * @param {string} dir top level to begin recursive descent through gstall subfolders
  */
 function readDirR(dir) {
   return fs.statSync(dir).isDirectory()
