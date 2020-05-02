@@ -6,7 +6,7 @@ const compile = require("near-sdk-as/compiler").compile;
 const asc = require("near-sdk-as/compiler").asc;
 
 // main folder that includes all projects used in this workshop
-const PROJECTS_DIR = "scavenger-hunt"
+const PROJECTS_DIR = "scavenger-hunt";
 
 /**
  * This file chooses one of two ways to compile AssemblyScript contracts
@@ -34,9 +34,9 @@ switch (mode) {
     break;
 
   default:
-    const projects = projectsNames()
-    if(Object.keys(projects).includes(mode)) {
-      compileOptimized(projects[mode], {})
+    const projects = projectsNames();
+    if (Object.keys(projects).includes(mode)) {
+      compileOptimized(projects[mode], {});
     } else {
       throw new Error(
         `Unexpected condition in build process.\nLast argument was [${mode}]`
@@ -57,7 +57,7 @@ process.exit(0);
  */
 function compileOptimized(fqPath, { relPath = "" }) {
   const folder = path.dirname(fqPath).split("/").pop(); // 01.greeting
-  const output = folder.split(".")[1];                  // greeting
+  const output = folder.split(".")[1]; // greeting
 
   reportProgress(folder, output, false);
 
@@ -66,19 +66,17 @@ function compileOptimized(fqPath, { relPath = "" }) {
       fqPath,
       "--binaryFile",
       `${relPath}out/${output}.wasm`,
-      "-O3z",                                           // optimize for size and speed
-      "--validate",                                     // validate the generated wasm module
+      "-O3z", // optimize for size and speed
+      "--validate", // validate the generated wasm module
       "--runPasses",
-      "inlining-optimizing,dce",                        // inlines to optimize and removes deadcode
-      "--measure",                                      // shows compiler run time
+      "inlining-optimizing,dce", // inlines to optimize and removes deadcode
+      "--measure", // shows compiler run time
     ],
-    { verbose: false }                                  // output the cli args passed to asc
+    { verbose: false } // output the cli args passed to asc
   );
 
-  reportFilesize(`${relPath}out/${output}.wasm`)
+  reportFilesize(`${relPath}out/${output}.wasm`);
 }
-
-
 
 /**
  * Compiles the most readable Wasm file and WAT file for learning and readability
@@ -87,21 +85,19 @@ function compileOptimized(fqPath, { relPath = "" }) {
  */
 function compileReadable(fqPath, { relPath = "" }) {
   const folder = path.dirname(fqPath).split("/").pop(); // 01.greeting
-  const output = folder.split(".")[1];                  // greeting
+  const output = folder.split(".")[1]; // greeting
 
   reportProgress(folder, output, true);
 
   compile(
-    fqPath,                                             // input file
-    `out/${output}.wasm`,                               // output file
+    fqPath, // input file
+    `out/${output}.wasm`, // output file
     [
-      "--validate",                                     // validate the generated wasm module
-      "--measure",                                      // shows compiler run time
+      "--validate", // validate the generated wasm module
+      "--measure", // shows compiler run time
     ],
-    { verbose: false }                                  // output the cli args passed to asc
+    { verbose: false } // output the cli args passed to asc
   );
-
-  
 }
 
 /**
@@ -127,17 +123,15 @@ function reportProgress(folder, output, includeWAT) {
   );
 }
 
-
 function reportFilesize(fqPath) {
   const stats = fs.statSync(fqPath);
-  console.log( `Filesize  : ${stats.size / 1000.0}kb` );
-
+  console.log(`Filesize  : ${stats.size / 1000.0}kb`);
 }
 
-function scanProjects(){
-  return readDirR(path.resolve(__dirname, "assembly"))          // only AssemblyScript files
-          .filter((fqPath) => fqPath.includes(PROJECTS_DIR))    // in the A.scavenger-hunt folder
-          .filter((fqPath) => fqPath.includes("main.ts"))       // just the contract entry points
+function scanProjects() {
+  return readDirR(path.resolve(__dirname, "assembly")) // only AssemblyScript files
+    .filter((fqPath) => fqPath.includes(PROJECTS_DIR)) // in the A.scavenger-hunt folder
+    .filter((fqPath) => fqPath.includes("main.ts")); // just the contract entry points
 }
 
 function projectsNames() {
@@ -145,7 +139,7 @@ function projectsNames() {
   const re = new RegExp(`${PROJECTS_DIR}\/\\d{2}.([A-Za-z]*)`);
   return projects.reduce((result, path) => {
     let match = path.match(re);
-    result[match[1]] = match.input
-    return result
+    result[match[1]] = match.input;
+    return result;
   }, {});
 }
