@@ -2,21 +2,21 @@
   "name": "workshop--exploring-assemblyscript-contracts",
   "version": "0.0.1",
   "description": "Learn to develop contracts for NEAR Protocol using AssemblyScript",
-  "author": "Sherif Abushadi <sherif@nearprotocol.com>",
+  "author": "Near, Inc. <hello@near.org>",
   "license": "MIT",
   "scripts": {
     "build": "yarn build:contract",
     "build:contract": "node asconfig.js",
     "clean": "rm -rf ./out",
     "test": "yarn test:unit",
-    "test:unit": "asp --verbose",
-    "test:simulate": "yarn near-vm",
+    "test:unit": "asp --verbose -f unit.spec",
+    "test:simulate:vm": "yarn near-vm",
     "test:simulate:greeting": "yarn test:simulate --wasm-file out/greeting.wasm",
     "test:integrate": "yarn near deploy"
   },
   "devDependencies": {
     "assemblyscript": "^0.9.4",
-    "near-sdk-as": "^0.2.2-10",
+    "near-sdk-as": "^0.2.2",
     "near-shell": "^0.21.0",
     "near-vm": "^0.0.8"
   },

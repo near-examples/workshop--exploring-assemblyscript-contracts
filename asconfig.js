@@ -6,7 +6,7 @@ const compile = require("near-sdk-as/compiler").compile;
 const asc = require("near-sdk-as/compiler").asc;
 
 // main folder that includes all projects used in this workshop
-const PROJECTS_DIR = "scavenger-hunt";
+const PROJECTS_DIR = "sample-projects";
 
 /**
  * This file chooses one of two ways to compile AssemblyScript contracts
