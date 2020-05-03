@@ -160,7 +160,7 @@ Unit tests are written using [`as-pect`](https://github.com/jtenner/as-pect) whi
 To see unit tests for this contract run
 
 ```text
-yarn test -f 01.greeting
+yarn test -f greeting.unit
 ```
 
 You should see something like this (may be colorized depending on your terminal configuration)
@@ -175,7 +175,7 @@ You should see something like this (may be colorized depending on your terminal 
  [Success]: ✔ should respond to saveMyMessage()
  [Success]: ✔ should respond to getAllMessages()
 
-    [File]: 01.greeting/__tests__/greeting.spec.ts
+    [File]: 01.greeting/__tests__/greeting.unit.spec.ts
   [Groups]: 2 pass, 2 total
   [Result]: ✔ PASS
 [Snapshot]: 0 total, 0 added, 0 removed, 0 different
@@ -201,29 +201,29 @@ There are two types of simulation tests we can expect to use:
 - **`near-vm`** allows us to exercise contract methods inside an exact replica of the on-chain virtual machine
 - **Runtime API** exposes interfaces for cross-contract calls and is compatible with popular testing frameworks
 
-Only the first, using `near-vm`, will be addressed here. It's key limitation is that we can only test one contract at a time, invoking methods, observing changes in state and getting a sense of the operating costs of the contract.
+Only the first, using `near-vm`, will be addressed in depth here. It's key limitation is that we can only test one contract at a time, invoking methods, observing changes in state and getting a sense of the operating costs of the contract.
+
+#### Simulation Testing with `near-vm`
 
 Run the following commands to simulate calling the method `sayMyName` on this contract
 
 1. First compile (or recompile after changes) the optimized `.wasm` file
 
-	```text
-	yarn build greeting
-	```
+   ```text
+   yarn build greeting
+   ```
 
 2. Then run a simulation test
 
-	```text
-	yarn test:simulate:greeting --method-name sayMyName
-	```
+   ```text
+   yarn test:simulate:vm:greeting --method-name sayMyName
+   ```
 
 You should see something like the following response
 
 ```text
-{"outcome":{"balance":"10000000000000000000000000","storage_usage":100,"return_data":
-{"Value":"\"Hello, bob!\""},"burnt_gas":41812607821,"used_gas":41812607821,"logs":
-["sayMyName() was called"]},"err":null,"receipts":[],"state":{}}
-✨  Done in 6.36s.
+{"outcome":{"balance":"10000000000000000000000000","storage_usage":100,"return_data":{"Value":"\"Hello, bob!\""},"burnt_gas":41812607821,"used_gas":41812607821,"logs":["sayMyName() was called"]},"err":null,"receipts":[],"state":{}}
+✨  Done in 1.75s.
 ```
 
 Which can be reformatted for easier scanning
@@ -235,12 +235,10 @@ Which can be reformatted for easier scanning
     "storage_usage": 100,
     "return_data": {
       "Value": "\"Hello, bob!\""
-    }, 
+    },
     "burnt_gas": 41812607821,
     "used_gas": 41812607821,
-    "logs": [
-      "sayMyName() was called"
-    ]
+    "logs": ["sayMyName() was called"]
   },
   "err": null,
   "receipts": [],
@@ -249,16 +247,16 @@ Which can be reformatted for easier scanning
 ```
 
 > **Notes**
-> 
-> - The value in `return_data` is what we expect if our account name were "bob".  But how did that get there?  Run `near-vm --help` to see simulation options including control over contract state and execution context as well as network economics.
-> - The amounts of `burnt_gas` and `used_gas` are the same, so why two different values?  `used_gas` >= `burnt_gas` is always true. If ever a difference, it will be refunded back to the originating account. [See SO for more](https://stackoverflow.com/a/59146364).
+>
+> - The value in `return_data` is what we expect if our account name were "bob". But how did that get there? Run `near-vm --help` to see simulation options including control over contract state and execution context as well as network economics.
+> - The amounts of `burnt_gas` and `used_gas` are the same, so why two different values? `used_gas` >= `burnt_gas` is always true. If ever a difference, it will be refunded back to the originating account. [See SO for more](https://stackoverflow.com/a/59146364).
 > - The entry in `logs` is exactly what we would expect to see.
 > - The contract `state` is empty.
 
 Run the following command to simulate calling the method `saveMyName` on this contract
 
 ```text
-yarn test:simulate:greeting --method-name saveMyName
+yarn test:simulate:vm:greeting --method-name saveMyName
 ```
 
 _(You only need to rebuild the contract if you've made changes)_
@@ -273,9 +271,7 @@ After reformatting, you should see something like the following response
     "return_data": "None",
     "burnt_gas": 49055516114,
     "used_gas": 49055516114,
-    "logs": [
-      "saveMyName() was called"
-    ]
+    "logs": ["saveMyName() was called"]
   },
   "err": null,
   "receipts": [],
@@ -286,30 +282,74 @@ After reformatting, you should see something like the following response
 ```
 
 > **Notes**
-> 
+>
 > - The absence of value in `return_data` since `saveMyName` has a return type of `void`.
-> - The amount of `used_gas` is higher now, by about 7.2 billion units.  This difference represents more compute time required to fetch an account name from the `context` object as well as reading and writing to storage
+> - The amount of `used_gas` is higher now, by about 7.2 billion units. This difference represents more compute time required to fetch an account name from the `context` object as well as reading and writing to storage
 > - The entry in `logs` is exactly what we would expect to see.
-> - This time the contract `state` is not empty.  It has 1 entry, a `key : value` pair, that is encoded as Base64 and, when decoded looks like this: `{"sender":"bob"}`.
+> - This time the contract `state` is not empty. It has 1 entry, a `key : value` pair, that is encoded as Base64 and, when decoded looks like this: `{"sender":"bob"}`.
 
 ---
 
 **A brief aside on decoding base64**
 
-The state key and value above was decoded using the code snippet below on macOS but we could have just used a [website like this one](https://www.base64decode.org/). If you prefer to decode using JavaScript you can use the code snippet below to decode your own state.
+The state key and value above was decoded using the code snippet below on macOS but we could have just used a [website like this one](https://www.base64decode.org/). If you prefer to decode using JavaScript you can use the code snippet below:
 
 ```js
 const utf8 = Buffer.from(data, "base64").toString("utf8");
 console.log(utf8);
 ```
 
+#### Simulation Testing with Runtime API
+
+At a very high level, testing with the Runtime API looks like this is a matter of creating accounts for all contracts being tested and user accounts being simulated before wiring everything up.
+
+To try this out:
+
+1. **move to the _contract_ folder** (where **this** `README.md` appears: `01.greeting/`)
+2. create a new file at this path `01.greeting/__tests__/runtime.spec.js` (note it is a `.js` file while the unit tests are in a `.ts` file)
+3. copy and paste the Runtime API code snippet (see above) into the `runtime.spec.js` file
+4. run `yarn test:simulate:runtime` (you may have to run `yarn` first if you find that Jest is missing)
+
+You should see something like
+
+```text
+ PASS  __tests__/greeting.simulate.spec.js
+  Greeting
+    View methods
+      ✓ responds to showYouKnow() (113ms)
+      ✓ responds to sayHello() (115ms)
+      responds to getAllMessages()
+        ✓ works with 0 messages (133ms)
+        ✓ works with 1 message (229ms)
+        ✓ works with many messages (493ms)
+    Call methods
+      ✓ responds to sayMyName() (128ms)
+      ✓ responds to saveMyName() (113ms)
+      ✓ responds to saveMyMessage() (106ms)
+    Cross-contract calls()
+      ✎ todo add cross contract call examples
+
+Test Suites: 1 passed, 1 total
+Tests:       1 todo, 8 passed, 9 total
+Snapshots:   0 total
+Time:        3.313s
+Ran all test suites matching /simulate.spec/i.
+✨  Done in 9.88s.
+```
+
+Feel free to explore the file `__tests__/greeting.simulate.spec.js` for details.
+
+---
+
 **A brief aside on contracts and accounts**
 
 You may have noticed that the words `contract` and `account` are sometimes interchangeable in this context. This is because NEAR accounts can only hold zero or one contracts while contracts can be deployed to any number of accounts.
 
-In the previous sections, since we were still testing and simulating and had not deployed anything to the network, the words `contract` and `account` were basically the same. 
+In the previous sections, since we were still testing and simulating and had not deployed anything to the network, the words `contract` and `account` were basically the same.
 
-In the next section about integration tests we will deploy the contract to a specific account (ie. the "contract account") on the network (ie. TestNet) and start calling the contract methods from a **different** account (ie. our "user account").  This is when the distinction between the words `contract` and `account` will become useful and important.
+In the next section about integration tests we will deploy the contract to a specific account (ie. the "contract account") on the network (ie. TestNet) and start calling the contract methods from a **different** account (ie. our "user account"). This is when the distinction between the words `contract` and `account` will become useful and important.
+
+_You may also have just noticed this distinction in the Simulation section above._
 
 You can read more about [accounts on NEAR Protocol here](https://docs.nearprotocol.com/docs/concepts/account).
 
@@ -322,22 +362,19 @@ There are two types of integration tests we can expect to use:
 - **NEAR Shell** serves as a console swiss army knife with the ability to manage accounts, contracts and more
 - **`near-api-js`** (our JavaScript API) wraps the NEAR JSON RPC API and exposes NEAR Wallet authentication
 
-Only the first, using NEAR Shell, will be addressed here. It's key limitation is that we cannot orchestrate cross-contract calls.  We will use NEAR Shell to create new accounts for contracts before we deploy, verify, and invoke methods on those contracts and finally deleting the contract accounts to clean up after ourselves.  We will rely on other tools like [NEAR Explorer](https://explorer.nearprotocol.com/) for transaction visibilty, history and more.
+Only the first, using NEAR Shell, will be addressed here. It's key limitation is that we cannot orchestrate cross-contract calls. We will use NEAR Shell to create new accounts for contracts before we deploy, verify, and invoke methods on those contracts and finally deleting the contract accounts to clean up after ourselves. We will rely on other tools like [NEAR Explorer](https://explorer.nearprotocol.com/) for transaction visibilty, history and more.
 
 **HEADS UP** -- if this is your first time using NEAR Shell to deploy a contract to TestNet, this may feel like a long and confusing process but once you've done it 3 times, it should only take about a minute from end to end and can be automated in a shell script.
 
-
 But first the tldr; for anyone who wants to start running before they walk.
-
 
 ---
 
 **tldr;**
 
-We use the symbol `<???>` to represent text that is  **unique to your account name**, whatever that is (or will be when you make it up). After this brief list of steps, each of these commands is described in greater detail including expected output and possible errors. 
+We use the symbol `<???>` to represent text that is **unique to your account name**, whatever that is (or will be when you make it up). After this brief list of steps, each of these commands is described in greater detail including expected output and possible errors.
 
 Note that all of this happening **on the command line.**
-
 
 **(0) Confirm NEAR Shell is installed**
 
@@ -405,9 +442,9 @@ Starting deployment. Account id: greeting.<???>.testnet, node: https://rpc.testn
 ```
 
 **(5) Verify deployment of the correct contract to the intended**
- 
+
 - The account name `greeting.<???>.testnet` should match the intended contract account
-- The value of `code_hash` should match _exactly_ (starting with `63tSDQ...`) **unless the contract code has changed**, in which case it will almost certainly be different. 
+- The value of `code_hash` should match _exactly_ (starting with `63tSDQ...`) **unless the contract code has changed**, in which case it will almost certainly be different.
 - Other values in this response are unlikely to match
 
 ```text
@@ -422,19 +459,18 @@ Account greeting.<???>.testnet
 
 ```json
 {
-   "amount":"99999999949722583262485000",
-   "locked":"0",
-   "code_hash":"63tSDQc9K5Nt9C8b1HDkv3VBnMFev9hXB589dZ9adsKA",
-   "storage_usage":14912,
-   "storage_paid_at":0,
-   "block_height":2048367,
-   "block_hash":"AbYg6aAbv4e1h2rwKG2vMsWphXm27Ehhde6xUKYzYjsT",
-   "formattedAmount":"99.999999949722583262485"
+  "amount": "99999999949722583262485000",
+  "locked": "0",
+  "code_hash": "63tSDQc9K5Nt9C8b1HDkv3VBnMFev9hXB589dZ9adsKA",
+  "storage_usage": 14912,
+  "storage_paid_at": 0,
+  "block_height": 2048367,
+  "block_hash": "AbYg6aAbv4e1h2rwKG2vMsWphXm27Ehhde6xUKYzYjsT",
+  "formattedAmount": "99.999999949722583262485"
 }
 ```
 
 **(6) For each method of the contract, test it and observe the response**
-
 
 **Test `showYouKnow()`**
 
@@ -534,6 +570,4 @@ Account greeting.<???>.testnet for network "default" was deleted.
 
 ```
 
-
 **END tldr;**
-

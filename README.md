@@ -2,14 +2,15 @@
 
 # NEAR Protocol Workshop :: Exploring AssemblyScript Contracts
 
-This workshop includes several activities: 
+This workshop includes several activities:
+
 - a **scavenger hunt** through several AssemblyScript contracts to get you quickly oriented
 - a **debugging challenge** to fix several problems with broken contracts
 - a **design challenge** to create new contracts and related models that satisfy a set of requirements
 
 **Prerequisites**
 
-If you're already comfortable with TypeScript then reading AssemblyScript should be a breeze.  If you're coming from JavaScript, you'll have to get your head around `types` (since JavaScript doesn't have them) but reading through the samples here should not be too difficult.  If you have no programming experience then this workshop will be challenging for you -- find someone to pair with so you can stay motivated and productive.
+If you're already comfortable with TypeScript then reading AssemblyScript should be a breeze. If you're coming from JavaScript, you'll have to get your head around `types` (since JavaScript doesn't have them) but reading through the samples here should not be too difficult. If you have no programming experience then this workshop will be challenging for you -- find someone to pair with so you can stay motivated and productive.
 
 **Orientation**
 
@@ -21,7 +22,7 @@ The data manipulation gets defined by stored procedures (smart contracts) in [Wa
 
 This workshop focuses on AssemblyScript as one of two currently supported languages for contract development.
 
-*We will not be deploying any of these contracts to the network since our focus is on learning AssemblyScript and almost all of the code presented in this workshop is also running on [live examples](https://examples.nearprotocol.com) where you will also find the frontend code that relies on these contracts.*
+_We will not be deploying any of these contracts to the network since our focus is on learning AssemblyScript and almost all of the code presented in this workshop is also running on [live examples](https://examples.nearprotocol.com) where you will also find the frontend code that relies on these contracts._
 
 ## Environment Setup
 
@@ -38,7 +39,7 @@ You will find the following folder structure in this repository under the `assem
 ```bash
 assembly
 │
-├── A.scavenger-hunt
+├── A.sample-projects
 │   ├── 01.greeting
 │   ├── 02.wallet-example
 │   ├── 03.counter
@@ -77,17 +78,17 @@ yarn mock --wasm-file <path to contract .wasm file> --method-name <contract meth
 # yarn mock --wasm-file ./out/counter.wasm --method-name incrementCounter
 ```
 
-*Note the projects are ordered by increasing complexity so lower numbers roughly implies "easier to understand".*
+_Note the projects are ordered by increasing complexity so lower numbers roughly implies "easier to understand"._
 
 ## Activity::Scavenger Hunt
 
-Keep your own notes.  Time permitting, we will share and discuss your findings and answer questions at the end of the activity.
+Keep your own notes. Time permitting, we will share and discuss your findings and answer questions at the end of the activity.
 
-Find examples of the following.  
+Find examples of the following.
 
 **Orientation**
 
-*Note, some of these may only take you **a few seconds** to complete so don't overthink things.  This activity is about massive exposure to several examples of smart contracts written using AssemblyScript for the NEAR platform.*
+_Note, some of these may only take you **a few seconds** to complete so don't overthink things. This activity is about massive exposure to several examples of smart contracts written using AssemblyScript for the NEAR platform._
 
 - [ ] a contract method that takes no parameters
 - [ ] a contract method that takes one parameter
@@ -101,7 +102,7 @@ Find examples of the following.
 
 **Storing Data**
 
-NEAR Protocol stores data in a key-value store called `Storage` which is also wrapped with a few persistent collections for developer convenience including `PersistentVector`, `PersistentSet`, `PersistentMap` and `PersistentDeque`.  Reading and writing to `Storage` requires specifying the type of data to store, whether `string`, `number` or `binary`.  Any custom data types (ie. custom data models) must be decorated with the `@nearBindgen` decorator so that the system knows to serialize them for storage.
+NEAR Protocol stores data in a key-value store called `Storage` which is also wrapped with a few persistent collections for developer convenience including `PersistentVector`, `PersistentSet`, `PersistentMap` and `PersistentDeque`. Reading and writing to `Storage` requires specifying the type of data to store, whether `string`, `number` or `binary`. Any custom data types (ie. custom data models) must be decorated with the `@nearBindgen` decorator so that the system knows to serialize them for storage.
 
 - [ ] an example that includes the `@nearBindgen` decorator (used to support serialization of custom data models)
 - [ ] an example that uses `Storage` to read and / or write data from blockchain storage
@@ -115,9 +116,9 @@ NEAR Protocol stores data in a key-value store called `Storage` which is also wr
 
 **Contract Context**
 
-NEAR Protocol accounts are initially created without an associated contract.  Each account can have a maximum of 1 contract deployed to its storage. The account maintains a copy of the contract code as well as any state storage consumed by the contract.  You can read more about [accounts on the NEAR platform here](https://docs.nearprotocol.com/docs/concepts/account).
+NEAR Protocol accounts are initially created without an associated contract. Each account can have a maximum of 1 contract deployed to its storage. The account maintains a copy of the contract code as well as any state storage consumed by the contract. You can read more about [accounts on the NEAR platform here](https://docs.nearprotocol.com/docs/concepts/account).
 
-- [ ] an example of using `context.sender` which represents the account that signed the current transaction  
+- [ ] an example of using `context.sender` which represents the account that signed the current transaction
 - [ ] an example of a unit test where the test explicitly sets the `signer_account_id` to control `context.sender`
 - [ ] an example of using `context.contractName` which represents the account on which the contract lives
 - [ ] an example of a unit test where the test explicitly sets the `current_account_id` to control `context.contractName`
@@ -130,10 +131,10 @@ NEAR Protocol accounts are initially created without an associated contract.  Ea
 
 ## Activity::Debugging Challenge
 
-Debug as many of the following problems as you can.  They are ordered by increasing difficulty.
+Debug as many of the following problems as you can. They are ordered by increasing difficulty.
 
-**Important Note:** 
-None of the tests were altered, only the `main.ts` contract file and / or the `model.ts` model file were changed from the original to create the problems you see in these failing tests or failures to compile the code. 
+**Important Note:**
+None of the tests were altered, only the `main.ts` contract file and / or the `model.ts` model file were changed from the original to create the problems you see in these failing tests or failures to compile the code.
 
 ### Broken Greeting
 
@@ -142,63 +143,63 @@ None of the tests were altered, only the `main.ts` contract file and / or the `m
 <details>
   <summary><em>Reveal hints</em></summary>
   <ul>
-    <li>try running this in your console from the root of the project<br><code>diff assembly/A.scavenger-hunt/01.greeting/main.ts assembly/B.debugging-challenge/01.broken-greeting/main.ts</code></li>
+    <li>try running this in your console from the root of the project<br><code>diff assembly/A.sample-projects/01.greeting/main.ts assembly/B.debugging-challenge/01.broken-greeting/main.ts</code></li>
   </ul>
 </details>
 
 ### Broken Counter
 
-- [ ] run `yarn test -f broken-counter` and solve the issues (there are 5 of them) 
+- [ ] run `yarn test -f broken-counter` and solve the issues (there are 5 of them)
 
 <details>
   <summary><em>Reveal hints</em></summary>
   <ul>
     <li>one error is preventing the code from compiling so none of the other tests are running.  solve the compiler error first so you can see the failing tests</li>
-    <li>try running this in your console from the root of the project<br><code>diff assembly/A.scavenger-hunt/03.counter/main.ts assembly/B.debugging-challenge/03.broken-counter/main.ts</code></li>
+    <li>try running this in your console from the root of the project<br><code>diff assembly/A.sample-projects/03.counter/main.ts assembly/B.debugging-challenge/03.broken-counter/main.ts</code></li>
   </ul>
 </details>
 
 ### Broken Guestbook
 
-- [ ] run `yarn test -f broken-guestbook` and solve the issues (there are several of them and many are preventing the code from compiling).  
+- [ ] run `yarn test -f broken-guestbook` and solve the issues (there are several of them and many are preventing the code from compiling).
 
 <details>
   <summary><em>Reveal hints</em></summary>
   <li><code>@nearBindgen</code> is a decorator added to custom models so they can be serialized and stored on chain</li>
   <li>persistent collections like <code>PersistentVector<T></code>require a type parameter which will often be the model you are trying to store on chain</li>
   <li>you can get the account name of the user that calls a function using <code>context.sender</code></li>
-  <li>try running this in your console from the root of the project<br><code>diff assembly/A.scavenger-hunt/05.guestbook/main.ts assembly/B.debugging-challenge/05.broken-guestbook/main.ts</code></li>
-  <li>try running this in your console from the root of the project<br><code>diff assembly/A.scavenger-hunt/05.guestbook/model.ts assembly/B.debugging-challenge/05.broken-guestbook/model.ts</code></li>
+  <li>try running this in your console from the root of the project<br><code>diff assembly/A.sample-projects/05.guestbook/main.ts assembly/B.debugging-challenge/05.broken-guestbook/main.ts</code></li>
+  <li>try running this in your console from the root of the project<br><code>diff assembly/A.sample-projects/05.guestbook/model.ts assembly/B.debugging-challenge/05.broken-guestbook/model.ts</code></li>
 </details>
 
 ## Activity::Design Challenge
 
-Choose one of the following projects and write the model(s) and contract(s) that satisfy the following requirements.  Include unit tests of course.  Test everything locally using `yarn mock`.
+Choose one of the following projects and write the model(s) and contract(s) that satisfy the following requirements. Include unit tests of course. Test everything locally using `yarn mock`.
 
-**Important Note:** 
-The design guidelines below are almost certainly incomplete.  They are intended to inspire you to consider the design challenge on your own or with your pair or team.  Feel free to run with these ideas and do not be constrained by what you see here.
+**Important Note:**
+The design guidelines below are almost certainly incomplete. They are intended to inspire you to consider the design challenge on your own or with your pair or team. Feel free to run with these ideas and do not be constrained by what you see here.
 
 ### PinkyPromise
 
-*(inspired by a 2019 hackathon project)*
+_(inspired by a 2019 hackathon project)_
 
-PinkyPromise is a system for recording promises on the blockchain for all to see, forever and ever.  A promise is a piece of text that is made `from` someone `to` someone (possibly themselves).  A promise may eventually be marked as `kept` or `broken` by the owner of the `to` account.
-  
+PinkyPromise is a system for recording promises on the blockchain for all to see, forever and ever. A promise is a piece of text that is made `from` someone `to` someone (possibly themselves). A promise may eventually be marked as `kept` or `broken` by the owner of the `to` account.
+
 **Models**
 
 - `PinkyPromise`
-  - Collects a commitment (as string) between two accounts (as strings).  Consider whether to use `Storage` directly (our on-chain key-value store) or one of the persistent collections that wraps `Storage` to mimic a Vector, Map, Queue or Set.
+  - Collects a commitment (as string) between two accounts (as strings). Consider whether to use `Storage` directly (our on-chain key-value store) or one of the persistent collections that wraps `Storage` to mimic a Vector, Map, Queue or Set.
 
 **Contracts**
 
 - `main`
-  - `makePromise(to: string, statement: string)` 
+  - `makePromise(to: string, statement: string)`
 
 ### BucketList
 
-*(inspired by Covid-19)*
+_(inspired by Covid-19)_
 
-BucketList is a system that records things we wish we all could do as soon as it's safe to go back outside.  
+BucketList is a system that records things we wish we all could do as soon as it's safe to go back outside.
 
 **Models**
 
@@ -215,16 +216,16 @@ BucketList is a system that records things we wish we all could do as soon as it
 
 ### OpenPetition
 
-*(inspired by an internal hackathon project)*
+_(inspired by an internal hackathon project)_
 
 OpenPetition is a system for managing the creation and support of petitions (ie. Change.org for blockchain).
 **Models**
 
 - `Petition`
   - Collects signatures (`context.sender`) in a `PersistentVector<string>` for anyone that calls the main contract's `sign` method, passing in the petition identifier.
-  - The Petition model should include Petition metadata like 
+  - The Petition model should include Petition metadata like
     - `title` as `string`
-    - `body` as `string` and 
+    - `body` as `string` and
     - `funding` as `u128`
   - The Petition model should include methods like
     - `sign(): bool`
@@ -232,7 +233,7 @@ OpenPetition is a system for managing the creation and support of petitions (ie.
 
 **Contracts**
 
-- `main` 
+- `main`
   - `sign(petitionId: string): bool` allows the `context.sender` to sign the petition
   - `list(): Array<string>` returns a list of petition identifiers
   - `show(petitionId: string): Petition` returns the details of a petition
@@ -240,8 +241,7 @@ OpenPetition is a system for managing the creation and support of petitions (ie.
 
 **Stretch Goals**
 
-- Consider how you would structure this project if each petition were its own contract instead of a model on a single contract.  What could the benefits of this be?
-
+- Consider how you would structure this project if each petition were its own contract instead of a model on a single contract. What could the benefits of this be?
 
 ## Getting Help
 

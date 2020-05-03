@@ -23,7 +23,7 @@ const message3 = "beleza!";
 
 let messages: PersistentDeque<string>;
 
-describe("Greeting", () => {
+describe("01. Greeting", () => {
   beforeEach(() => {
     Context.setSigner_account_id(alice);
     messages = new PersistentDeque<string>("messages");
