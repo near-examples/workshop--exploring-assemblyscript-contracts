@@ -4,12 +4,24 @@ _This contract is part of a workshop on AssemblyScript_
 
 ## Contents
 
-- Interface (behavior)
-- Models (data)
-- Building - For Readabilty - For Cost Optimization
-- Testing - Unit Tests - Simululation Tests - Integration Tests
+- [Design](#design)
+  - [Interface](#interface)
+  - [Models](#models)
+- [Build](#building)
+  - [Readable Output](#readable-output)
+  - [Cost Optimized Output](#cost-optimized-output)
+- [Test](#testing)
+  - [Unit Tests](#unit-tests)
+  - [Simulation Tests](#simulation-tests)
+    - [Simulation Testing with `near-vm`](#simulation-testing-with-near-vm)
+    - [Simulation Testing with Runtime API](#simulation-testing-with-runtime-api)
+  - [Integration Tests](#integration-tests)
+    - [Integration Tests with NEAR Shell](#integration-tests-with-near-shell)
+    - [Integration Tests with `near-api-js`](#integration-tests-with-near-api-js)
 
-## Interface
+## Design
+
+### Interface
 
 ```ts
 export function showYouKnow(): void;
@@ -66,7 +78,7 @@ export function getAllMessages(): Array<string>;
 
 - All of these methods append to the log for consistency
 
-## Models
+### Models
 
 _This contract has no models_
 
@@ -153,7 +165,7 @@ There are three classes of tests presented here:
 
 See `package.json` for various test scripts.
 
-### 1. Unit Tests
+### Unit Tests
 
 Unit tests are written using [`as-pect`](https://github.com/jtenner/as-pect) which provides blazing 🔥 fast testing with AssemblyScript.
 
@@ -194,7 +206,7 @@ You should see something like this (may be colorized depending on your terminal 
 
 You can explore the contents of `01.greeting/__tests__/greeting.spec.ts` for unit test details.
 
-### 2. Simulation Tests
+### Simulation Tests
 
 There are two types of simulation tests we can expect to use:
 
@@ -288,8 +300,6 @@ After reformatting, you should see something like the following response
 > - The entry in `logs` is exactly what we would expect to see.
 > - This time the contract `state` is not empty. It has 1 entry, a `key : value` pair, that is encoded as Base64 and, when decoded looks like this: `{"sender":"bob"}`.
 
----
-
 **A brief aside on decoding base64**
 
 The state key and value above was decoded using the code snippet below on macOS but we could have just used a [website like this one](https://www.base64decode.org/). If you prefer to decode using JavaScript you can use the code snippet below:
@@ -339,8 +349,6 @@ Ran all test suites matching /simulate.spec/i.
 
 Feel free to explore the file `__tests__/greeting.simulate.spec.js` for details.
 
----
-
 **A brief aside on contracts and accounts**
 
 You may have noticed that the words `contract` and `account` are sometimes interchangeable in this context. This is because NEAR accounts can only hold zero or one contracts while contracts can be deployed to any number of accounts.
@@ -353,8 +361,6 @@ _You may also have just noticed this distinction in the Simulation section above
 
 You can read more about [accounts on NEAR Protocol here](https://docs.nearprotocol.com/docs/concepts/account).
 
----
-
 ### Integration Tests
 
 There are two types of integration tests we can expect to use:
@@ -363,6 +369,8 @@ There are two types of integration tests we can expect to use:
 - **`near-api-js`** (our JavaScript API) wraps the NEAR JSON RPC API and exposes NEAR Wallet authentication
 
 Only the first, using NEAR Shell, will be addressed here. It's key limitation is that we cannot orchestrate cross-contract calls. We will use NEAR Shell to create new accounts for contracts before we deploy, verify, and invoke methods on those contracts and finally deleting the contract accounts to clean up after ourselves. We will rely on other tools like [NEAR Explorer](https://explorer.nearprotocol.com/) for transaction visibilty, history and more.
+
+#### Integration Tests with NEAR Shell
 
 **HEADS UP** -- if this is your first time using NEAR Shell to deploy a contract to TestNet, this may feel like a long and confusing process but once you've done it 3 times, it should only take about a minute from end to end and can be automated in a shell script.
 
@@ -571,3 +579,15 @@ Account greeting.<???>.testnet for network "default" was deleted.
 ```
 
 **END tldr;**
+
+#### Integration Tests with `near-api-js`
+
+`near-api-js` is a JavaScript / TypeScript library for development of dApps on the NEAR platform that can be used from any client or server-side JavaScript environment.
+
+For context, it's worth knowing that the core NEAR platform API is a JSON-RPC interface. `near-api-js` wraps this RPC interface with convenience functions and exposes NEAR primitives as first class JavaScript objects.
+
+We use `near-api-js` internally in tools like NEAR Shell and NEAR Wallet.
+
+You would use `near-api-js` as your primary interface with the NEAR platform anytime you are writing JavaScript (client or server-side).
+
+See our [documentation for more details](https://docs.nearprotocol.com/docs/roles/developer/examples/near-api-js/introduction).
