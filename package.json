@@ -11,7 +11,7 @@
     "test": "yarn test:unit",
     "test:unit": "asp --verbose -f unit.spec",
     "test:simulate:vm": "yarn near-vm",
-    "test:simulate:greeting": "yarn test:simulate --wasm-file out/greeting.wasm",
+    "test:simulate:vm:greeting": "yarn test:simulate:vm --wasm-file out/greeting.wasm",
     "test:integrate": "yarn near deploy"
   },
   "devDependencies": {

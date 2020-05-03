@@ -216,7 +216,7 @@ Run the following commands to simulate calling the method `sayMyName` on this co
 2. Then run a simulation test
 
    ```text
-   yarn test:simulate:greeting --method-name sayMyName
+   test:simulate:vm:greeting --method-name sayMyName
    ```
 
 You should see something like the following response
@@ -258,7 +258,7 @@ Which can be reformatted for easier scanning
 Run the following command to simulate calling the method `saveMyName` on this contract
 
 ```text
-yarn test:simulate:greeting --method-name saveMyName
+test:simulate:vm:greeting --method-name saveMyName
 ```
 
 _(You only need to rebuild the contract if you've made changes)_
