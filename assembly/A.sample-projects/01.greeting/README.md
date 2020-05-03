@@ -160,7 +160,7 @@ Unit tests are written using [`as-pect`](https://github.com/jtenner/as-pect) whi
 To see unit tests for this contract run
 
 ```text
-yarn test -f 01.greeting
+yarn test -f greeting.unit
 ```
 
 You should see something like this (may be colorized depending on your terminal configuration)
@@ -175,7 +175,7 @@ You should see something like this (may be colorized depending on your terminal 
  [Success]: ✔ should respond to saveMyMessage()
  [Success]: ✔ should respond to getAllMessages()
 
-    [File]: 01.greeting/__tests__/greeting.spec.ts
+    [File]: 01.greeting/__tests__/greeting.unit.spec.ts
   [Groups]: 2 pass, 2 total
   [Result]: ✔ PASS
 [Snapshot]: 0 total, 0 added, 0 removed, 0 different
@@ -216,16 +216,14 @@ Run the following commands to simulate calling the method `sayMyName` on this co
 2. Then run a simulation test
 
    ```text
-   test:simulate:vm:greeting --method-name sayMyName
+   yarn test:simulate:vm:greeting --method-name sayMyName
    ```
 
 You should see something like the following response
 
 ```text
-{"outcome":{"balance":"10000000000000000000000000","storage_usage":100,"return_data":
-{"Value":"\"Hello, bob!\""},"burnt_gas":41812607821,"used_gas":41812607821,"logs":
-["sayMyName() was called"]},"err":null,"receipts":[],"state":{}}
-✨  Done in 6.36s.
+{"outcome":{"balance":"10000000000000000000000000","storage_usage":100,"return_data":{"Value":"\"Hello, bob!\""},"burnt_gas":41812607821,"used_gas":41812607821,"logs":["sayMyName() was called"]},"err":null,"receipts":[],"state":{}}
+✨  Done in 1.75s.
 ```
 
 Which can be reformatted for easier scanning
@@ -258,7 +256,7 @@ Which can be reformatted for easier scanning
 Run the following command to simulate calling the method `saveMyName` on this contract
 
 ```text
-test:simulate:vm:greeting --method-name saveMyName
+yarn test:simulate:vm:greeting --method-name saveMyName
 ```
 
 _(You only need to rebuild the contract if you've made changes)_
@@ -294,7 +292,7 @@ After reformatting, you should see something like the following response
 
 **A brief aside on decoding base64**
 
-The state key and value above was decoded using the code snippet below on macOS but we could have just used a [website like this one](https://www.base64decode.org/). If you prefer to decode using JavaScript you can use the code snippet below to decode your own state.
+The state key and value above was decoded using the code snippet below on macOS but we could have just used a [website like this one](https://www.base64decode.org/). If you prefer to decode using JavaScript you can use the code snippet below:
 
 ```js
 const utf8 = Buffer.from(data, "base64").toString("utf8");
@@ -303,78 +301,43 @@ console.log(utf8);
 
 #### Simulation Testing with Runtime API
 
-At a very high level, testing with the Runtime API looks like this
-
-```js
-const Runtime = require("near-sdk-as/runtime").Runtime;
-const path = require("path");
-
-const contractWasm = path.join(__dirname, "../out/greeting.wasm");
-
-describe("Greeting ", function () {
-  const alice = "alice";
-  let runtime;
-  let contract;
-
-  function invokeContractMethod(type, name, params = {}) {
-    // this ends up being one of the following
-    //    contract.view("sayHello");
-    //    contract.call("sayMyName");
-    const response = contract[type](name, params);
-
-    if (response.return_data) {
-      return response.return_data;
-    } else if (response.return_value) {
-      return response.return_value.replace(/\\([\s\S])|(")/g, "");
-    } else {
-      return response;
-    }
-  }
-
-  beforeAll(function () {
-    runtime = new Runtime();
-    contract = runtime.newAccount(alice, contractWasm);
-  });
-
-  describe("View methods", function () {
-    it("responds to sayHello()", function () {
-      const message = invokeContractMethod("view", "sayHello");
-      expect(message).toEqual("Hello!");
-    });
-  });
-
-  describe("Call methods", function () {
-    it("responds to sayMyName()", function () {
-      const message = invokeContractMethod("call", "sayMyName");
-      expect(message).toEqual(`Hello, ${alice}!`);
-    });
-  });
-});
-```
+At a very high level, testing with the Runtime API looks like this is a matter of creating accounts for all contracts being tested and user accounts being simulated before wiring everything up.
 
 To try this out:
 
 1. **move to the _contract_ folder** (where **this** `README.md` appears: `01.greeting/`)
 2. create a new file at this path `01.greeting/__tests__/runtime.spec.js` (note it is a `.js` file while the unit tests are in a `.ts` file)
 3. copy and paste the Runtime API code snippet (see above) into the `runtime.spec.js` file
-4. run `npx jest -f runtime` _(Jest is not included as a repo dependency here so we use `npx` instead)_
+4. run `yarn test:simulate:runtime` (you may have to run `yarn` first if you find that Jest is missing)
 
 You should see something like
 
 ```text
-npx: installed 506 in 11.469s
- PASS  __tests__/runtime.spec.js
+ PASS  __tests__/greeting.simulate.spec.js
   Greeting
     View methods
-      ✓ responds to sayHello() (116ms)
+      ✓ responds to showYouKnow() (113ms)
+      ✓ responds to sayHello() (115ms)
+      responds to getAllMessages()
+        ✓ works with 0 messages (133ms)
+        ✓ works with 1 message (229ms)
+        ✓ works with many messages (493ms)
     Call methods
-      ✓ responds to sayMyName() (110ms)
+      ✓ responds to sayMyName() (128ms)
+      ✓ responds to saveMyName() (113ms)
+      ✓ responds to saveMyMessage() (106ms)
+    Cross-contract calls()
+      ✎ todo add cross contract call examples
 
 Test Suites: 1 passed, 1 total
-Tests:       2 passed, 2 total
+Tests:       1 todo, 8 passed, 9 total
 Snapshots:   0 total
-Time:        1.227s
+Time:        3.313s
+Ran all test suites matching /simulate.spec/i.
+✨  Done in 9.88s.
 ```
+
+Feel free to explore the file `__tests__/greeting.simulate.spec.js` for details.
 
 ---
 
@@ -385,6 +348,8 @@ You may have noticed that the words `contract` and `account` are sometimes inter
 In the previous sections, since we were still testing and simulating and had not deployed anything to the network, the words `contract` and `account` were basically the same.
 
 In the next section about integration tests we will deploy the contract to a specific account (ie. the "contract account") on the network (ie. TestNet) and start calling the contract methods from a **different** account (ie. our "user account"). This is when the distinction between the words `contract` and `account` will become useful and important.
+
+_You may also have just noticed this distinction in the Simulation section above._
 
 You can read more about [accounts on NEAR Protocol here](https://docs.nearprotocol.com/docs/concepts/account).
 
