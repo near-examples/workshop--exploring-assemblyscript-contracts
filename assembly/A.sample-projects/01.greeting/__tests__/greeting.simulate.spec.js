@@ -92,7 +92,7 @@ describe("Greeting ", () => {
         };
 
         // useful for visualizing contract state
-        // console.log(greeting.getState());
+        // console.log(greeting);
 
         const { result, data } = simulate(transaction);
 
@@ -125,7 +125,7 @@ describe("Greeting ", () => {
         };
 
         // useful for visualizing contract state
-        // console.log(greeting.getState());
+        // console.log(greeting);
 
         const { result, data } = simulate(transaction);
 
@@ -198,10 +198,10 @@ describe("Greeting ", () => {
       expect(data).toBeTruthy();
 
       // "bWVzc2FnZXM6Oi0x" is "messages::-1" in base64
-      // "YWxpY2Ugc2F5cyBhd2Vzb21lc2F1Y2U=" is "alice says awesomesauce" in base64
+      // "YWxpY2Ugc2F5cyBhd2Vzb21lc2F1Y2Uh" is "alice says awesomesauce" in base64
       expect(result.state).toHaveProperty(
         "bWVzc2FnZXM6Oi0x",
-        "YWxpY2Ugc2F5cyBhd2Vzb21lc2F1Y2U="
+        "YWxpY2Ugc2F5cyBhd2Vzb21lc2F1Y2Uh"
       );
 
       expectToFind("saveMyMessage() was called", {

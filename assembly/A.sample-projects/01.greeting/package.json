@@ -9,6 +9,6 @@
   },
   "devDependencies": {
     "jest": "^25.5.4",
-    "near-sdk-as": "near/near-sdk-as#storage_usage"
+    "near-sdk-as": "^0.3.0"
   }
 }

@@ -2646,9 +2646,10 @@ near-mock-vm@^0.1.0:
     js-base64 "^2.5.2"
     yargs "^15.3.1"
 
-near-sdk-as@near/near-sdk-as#storage_usage:
-  version "0.2.2"
-  resolved "https://codeload.github.com/near/near-sdk-as/tar.gz/498cf0ad933689bf579f739b6f7ab89bbf393a7e"
+near-sdk-as@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/near-sdk-as/-/near-sdk-as-0.3.0.tgz#643e61b410bf631d3779893869971b535c1fb1bc"
+  integrity sha512-VuynuHCU1vb38ahTRT1BV3knMH5pK0kM90wKhLi1C7puRGqfJuzyIYs9TzbH+2MyNjF0EjQgdNwvj0j87P9fAg==
   dependencies:
     "@as-pect/cli" "^3.1.4"
     as-bignum "^0.1.5"
