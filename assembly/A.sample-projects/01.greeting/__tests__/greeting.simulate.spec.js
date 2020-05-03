@@ -62,7 +62,7 @@ describe("Greeting ", () => {
       });
     });
 
-    describe("getAllMessages()", () => {
+    describe("responds to getAllMessages()", () => {
       it("works with 0 messages", () => {
         const transaction = {
           contract: greeting,
@@ -91,9 +91,11 @@ describe("Greeting ", () => {
           },
         };
 
+        // useful for visualizing contract state
+        // console.log(greeting.getState());
+
         const { result, data } = simulate(transaction);
 
-        // TODO: this isn't the right account, should be alice
         expectToFind("alice says awesomesauce!", {
           inArray: data,
         });
@@ -121,6 +123,9 @@ describe("Greeting ", () => {
             name: "getAllMessages",
           },
         };
+
+        // useful for visualizing contract state
+        // console.log(greeting.getState());
 
         const { result, data } = simulate(transaction);
 
@@ -173,32 +178,6 @@ describe("Greeting ", () => {
       expect(result.state).toHaveProperty("c2VuZGVy", "YWxpY2U=");
 
       expectToFind("saveMyName() was called", {
-        inArray: result.outcome.logs,
-      });
-    });
-
-    it("responds to saveMyMessage()", () => {
-      const transaction = {
-        contract: greeting,
-        method: {
-          type: "call",
-          name: "saveMyMessage",
-          params: { message: "awesomesauce" },
-        },
-      };
-
-      const { data, result } = simulate(transaction);
-
-      expect(data).toBeTruthy();
-
-      // "bWVzc2FnZXM6Oi0x" is "messages::-1" in base64
-      // "Z3JlZXRpbmcgc2F5cyBhd2Vzb21lc2F1Y2U=" is "greeting says awesomesauce" in base64
-      expect(result.state).toHaveProperty(
-        "bWVzc2FnZXM6Oi0x",
-        "Z3JlZXRpbmcgc2F5cyBhd2Vzb21lc2F1Y2U="
-      );
-
-      expectToFind("saveMyMessage() was called", {
         inArray: result.outcome.logs,
       });
     });
