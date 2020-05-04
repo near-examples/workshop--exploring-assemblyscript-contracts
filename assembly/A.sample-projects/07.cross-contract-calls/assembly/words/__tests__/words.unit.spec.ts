@@ -8,7 +8,7 @@ let text: string;
 let lang: string;
 let word: Word;
 
-describe("CONTRACT: Words", () => {
+describe("07.  Cross-Contract Calls :: Words", () => {
   beforeEach(() => {
     text = "sample";
     lang = "en-us";
