@@ -66,7 +66,8 @@ assembly
 │   ├── 03.counter
 │   ├── 04.token-contract
 │   ├── 05.guestbook
-│   └── 06.chat
+│   ├── 06.chat
+│   └── 07.cross-contract-calls
 │
 ├── B.debugging-challenge
 │   ├── 01.broken-greeting
