@@ -7,10 +7,10 @@ _This contract is part of a workshop on AssemblyScript_
 - [Design](#design)
   - [Interface](#interface)
   - [Models](#models)
-- [Building](#building)
+- [Build](#build)
   - [Readable Output](#readable-output)
   - [Cost Optimized Output](#cost-optimized-output)
-- [Testing](#testing)
+- [Test](#test)
   - [Unit Tests](#unit-tests)
   - [Simulation Tests](#simulation-tests)
     - [Simulation Testing with `near-vm`](#simulation-testing-with-near-vm)
@@ -80,9 +80,9 @@ export function getAllMessages(): Array<string>;
 
 ### Models
 
-_This contract has no models_
+_This contract has no custom models_
 
-## Building
+## Build
 
 We have several configuration options when compiling AssemblyScript to Wasm.
 
@@ -96,7 +96,7 @@ To better understand how AssemblyScript is transformed into Wasm, read the contr
 
 To generate the `.wat` file alongside the `.wasm` file:
 
-1. **move to the _contract_ folder** (where **this** `README.md` appears: `01.greeting/`)
+1. **move to the _sample project_ folder** (where **this** `README.md` appears: `01.greeting/`)
 2. and run `yarn build`
 
 You should see something like
@@ -116,24 +116,24 @@ Filesize  : 14.666kb
 
 > **Notes**
 >
-> - The optimize step took less than half a second
+> - The optimize step took less than half a second (your exact timings may vary)
 > - The size of this file is about `15kb`
 
 You should now be able to see the`.wasm` and `.wat` files for this contract in a folder called `out`.
 
-Consider scanning the WAT file for any recognizable strings, you may be surprised at what you find.
+Consider scanning the WAT file for any recognizable strings, you may be surprised at what you find.  Since it's almost 10k lines long, you can search for the method names included in the interface above or scroll from the top of the file down to about line 200 or so for maximum benefit.
 
-If interested, these links will help you make sense of the WAT format
+If interested, these links will help you make sense of the WAT format you just saw:
 
-- [Learn to Read WAT using AssemblyScript](http://pldev2.cs.umd.edu/as-demo/)
-- [WAT file format here](https://developer.mozilla.org/en-US/docs/WebAssembly/Text_format_to_wasm)
+- [Understanding WebAssembly text format](https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format)
+- [Practice Making Sense of WAT using AssemblyScript](http://pldev2.cs.umd.edu/as-demo/)
 
 ### Cost Optimized Output
 
 To generate a speedy, size-optimized version of this contract (which will ultimately cost less to maintain):
 
-1. **move to the _root_ folder** of this repository (where the **main** workshop `README.md` appears)
-2. **run** `yarn build greeting`
+1. **move to the repository _root_ folder** (where the **main** workshop `README.md` appears)
+2. **run** `yarn build greeting` 
 
 You should see something like
 
@@ -155,19 +155,37 @@ Filesize  : 14.669kb
 > - The optimize step took almost `3 seconds`, about 10X unoptimized time
 > - The size of this file is _also_ about `15kb` although `.wasm` file sizes will diverge by 5X with increased contract complexity
 
-## Testing
+**A brief aside**
+
+_Which folder should I be in while running these commands?_
+
+Almost all terminal commands in this workshop should be executed in the repository's **root folder**. 
+
+The *only* 2 cases when it's useful to execute a command in a sample project folder are 
+- if you want to generate the `.wat` file or 
+- if you want to run simulation tests (more on this later)
+
+_Compiling AssemblyScript?_
+
+If you're curious about the differences between the two compilation processes used above, take a look at the file called `asconfig.js` (in the repository root folder) where you'll find two functions, `compileReadable` and `compileOptimized`.  You'll find the functions differ in switches passed to the compiler.  You could try changing the switches to see the difference in output.
+
+_Using Gitpod?_
+
+Please feel encouraged to edit any and all files in this repo while you explore.  A reset of this environment is just a click away: just head back to the main `README` and reopen this workshop in Gitpod if you ever get stuck.
+
+## Test
 
 There are three classes of tests presented here:
 
 - **Unit** tests exercise the methods and models of your contract
-- **Simulation** tests provide fine-grained control over economics, contract state and execution context
+- **Simulation** tests provide fine-grained control over contract state, execution context and even network economics
 - **Integration** tests get as close to production as possible with deployment to a local node, BetaNet or TestNet
 
-See `package.json` for various test scripts.
+We will explore each of these in turn.
 
 ### Unit Tests
 
-Unit tests are written using [`as-pect`](https://github.com/jtenner/as-pect) which provides blazing 🔥 fast testing with AssemblyScript.
+Unit tests are written using [`as-pect`](https://github.com/jtenner/as-pect) which provides "blazing 🔥 fast testing with AssemblyScript".
 
 To see unit tests for this contract run
 
@@ -231,7 +249,7 @@ Run the following commands to simulate calling the method `sayMyName` on this co
    yarn test:simulate:vm:greeting --method-name sayMyName
    ```
 
-You should see something like the following response
+You should see something like the following response 
 
 ```text
 {"outcome":{"balance":"10000000000000000000000000","storage_usage":100,"return_data":{"Value":"\"Hello, bob!\""},"burnt_gas":41812607821,"used_gas":41812607821,"logs":["sayMyName() was called"]},"err":null,"receipts":[],"state":{}}
@@ -300,25 +318,32 @@ After reformatting, you should see something like the following response
 > - The entry in `logs` is exactly what we would expect to see.
 > - This time the contract `state` is not empty. It has 1 entry, a `key : value` pair, that is encoded as Base64 and, when decoded looks like this: `{"sender":"bob"}`.
 
-**A brief aside on decoding base64**
+**A brief aside on decoding**
 
-The state key and value above was decoded using the code snippet below on macOS but we could have just used a [website like this one](https://www.base64decode.org/). If you prefer to decode using JavaScript you can use the code snippet below:
+_Base Sixty What?_
+
+Just like human languages encode our thoughts into spoken words and printed text, data is encoded in different formats on computer systems depending on the use case.  If data is "at rest", say on a backup drive, it can be encoded using a compression algorithm for better storage efficiency.  And when data is "in motion", say between machines over HTTP, base64 is a good choice since the data less less likely to get corrupted during transfer.
+
+The state "key" and "value" above were decoded using the code snippet below but we could just as easily have used a [website like this one](https://www.base64decode.org/). 
 
 ```js
-const utf8 = Buffer.from(data, "base64").toString("utf8");
-console.log(utf8);
+const key = "c2VuZGVy"
+const value = "Ym9i"
+const decodedKey = Buffer.from(key, "base64").toString("utf8");
+const decodedValue = Buffer.from(value, "base64").toString("utf8");
+console.log(decodedKey, decodedValue);
 ```
 
 #### Simulation Testing with Runtime API
 
-At a very high level, testing with the Runtime API looks like this is a matter of creating accounts for all contracts being tested and user accounts being simulated before wiring everything up.
+At a very high level, testing with the Runtime API allows us, using JavaScript, to create accounts for contracts, load them up with the Wasm binary, add user accounts and simulate their interaction.
 
 To try this out:
 
-1. **move to the _contract_ folder** (where **this** `README.md` appears: `01.greeting/`)
-2. create a new file at this path `01.greeting/__tests__/runtime.spec.js` (note it is a `.js` file while the unit tests are in a `.ts` file)
-3. copy and paste the Runtime API code snippet (see above) into the `runtime.spec.js` file
-4. run `yarn test:simulate:runtime` (you may have to run `yarn` first if you find that Jest is missing)
+1. **move to the _sample project_ folder** (where **this** `README.md` appears: `01.greeting/`)
+2. run `yarn` inside that folder *(we will use Jest for this)*
+3. run `yarn build` to build `greeting.wasm` locally (just as we did when browsing the `.wat` file earlier)
+4. run `yarn test:simulate:runtime`
 
 You should see something like
 
@@ -351,13 +376,13 @@ Feel free to explore the file `__tests__/greeting.simulate.spec.js` for details.
 
 **A brief aside on contracts and accounts**
 
-You may have noticed that the words `contract` and `account` are sometimes interchangeable in this context. This is because NEAR accounts can only hold zero or one contracts while contracts can be deployed to any number of accounts.
+You may have noticed that the words `contract` and `account` are sometimes interchangeable. This is because NEAR accounts can only hold zero or one contracts while a contract can be deployed to multiple accounts.
 
-In the previous sections, since we were still testing and simulating and had not deployed anything to the network, the words `contract` and `account` were basically the same.
+In the previous sections, since we were only testing and simulating and had not deployed anything to the network, the words `contract` and `account` were basically the same, although you may have already noticed this distinction if you took a close look at the `simulate.spec` file a moment ago.
 
-In the next section about integration tests we will deploy the contract to a specific account (ie. the "contract account") on the network (ie. TestNet) and start calling the contract methods from a **different** account (ie. our "user account"). This is when the distinction between the words `contract` and `account` will become useful and important.
+In the next section about integration tests where we will be working with a live network, the distinction between **contract accounts** vs. **user accounts** will become useful and important.
 
-_You may also have just noticed this distinction in the Simulation section above._
+We will deploy the contract to a specific account (ie. the contract account) on the network (ie. TestNet) and call contract methods from a **different** account (ie. our user account).
 
 You can read more about [accounts on NEAR Protocol here](https://docs.nearprotocol.com/docs/concepts/account).
 
@@ -368,7 +393,9 @@ There are two types of integration tests we can expect to use:
 - **NEAR Shell** serves as a console swiss army knife with the ability to manage accounts, contracts and more
 - **`near-api-js`** (our JavaScript API) wraps the NEAR JSON RPC API and exposes NEAR Wallet authentication
 
-Only the first, using NEAR Shell, will be addressed here. It's key limitation is that we cannot orchestrate cross-contract calls. We will use NEAR Shell to create new accounts for contracts before we deploy, verify, and invoke methods on those contracts and finally deleting the contract accounts to clean up after ourselves. We will rely on other tools like [NEAR Explorer](https://explorer.nearprotocol.com/) for transaction visibilty, history and more.
+Only the first, using NEAR Shell, will be addressed here in any depth. Its key limitation is that we cannot orchestrate cross-contract calls. 
+
+We will use NEAR Shell to login to our own user account and then use it again to create a new account for our contract before we deploy, verify, and invoke methods on the contract.  Finally, we will delete the contract account to clean up after ourselves. We will rely on other tools like [NEAR Explorer](https://explorer.nearprotocol.com/) for transaction visibility, history and more.
 
 #### Integration Tests with NEAR Shell
 

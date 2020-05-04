@@ -5,7 +5,7 @@
     "build:contract": "node ../../../asconfig.js $(pwd)",
     "clean": "rm -rf ./out",
     "test": "echo You must be at the top level to run most tests",
-    "test:simulate:runtime": "yarn build && jest -f simulate.spec"
+    "test:simulate:runtime": "jest -f simulate.spec"
   },
   "devDependencies": {
     "jest": "^25.5.4",

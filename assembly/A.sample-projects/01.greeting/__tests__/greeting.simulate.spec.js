@@ -92,7 +92,7 @@ describe("Greeting ", () => {
         };
 
         // useful for visualizing contract state
-        // console.log(greeting);
+        // console.log(greeting.state);
 
         const { result, data } = simulate(transaction);
 
@@ -125,7 +125,7 @@ describe("Greeting ", () => {
         };
 
         // useful for visualizing contract state
-        // console.log(greeting);
+        // console.log(greeting.state);
 
         const { result, data } = simulate(transaction);
 
@@ -175,7 +175,6 @@ describe("Greeting ", () => {
 
       // "c2VuZGVy" is " in base64
       // "YWxpY2U=" is "alice" in base64
-      console.log(result.state);
       expect(result.state).toHaveProperty("sender", "alice");
 
       expectToFind("saveMyName() was called", {
