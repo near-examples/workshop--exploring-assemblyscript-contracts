@@ -16,17 +16,17 @@ If you're already comfortable with TypeScript then reading AssemblyScript should
 
 If you're totally new to NEAR you can [start here](https://docs.nearprotocol.com/docs/quick-start/new-to-near) with a high level overview.
 
-NEAR Protocol (aka "NEAR") is a public peer-to-peer key-value database. Public as in open to everyone for read anything and write what you are allowed to. The write permissions are defined by the access keys, so only the owner of the data can give permissions to modify the data they own.
+NEAR Protocol (aka "NEAR") is a public peer-to-peer key-value database. Public as in open to everyone for reading anything and writing what you are allowed to. Write permissions are defined by access keys so only the owner of the data can give permissions to modify data they own.
 
-The data manipulation gets defined by stored procedures (smart contracts) in [Wasm](https://webassembly.org), which means that those can be implemented in any programming language compilable to Wasm (e.g. Rust, AssemblyScript, Kotlin, C, C++, Nim, Zig, etc).
+Manipulation of data is controlled by stored procedures (smart contracts) executing as [Wasm](https://webassembly.org) which means they can be implemented in any programming language that compiles to Wasm (ie. Rust, AssemblyScript, Kotlin, C, C++, Nim, Zig, etc).
 
-This workshop focuses on AssemblyScript as one of two currently supported languages for contract development.
+This workshop focuses on AssemblyScript as one of two currently supported languages for contract development on the NEAR platform.
 
-_We will not be deploying any of these contracts to the network since our focus is on learning AssemblyScript and almost all of the code presented in this workshop is also running on [live examples](https://examples.nearprotocol.com) where you will also find the frontend code that relies on these contracts._
+_We will not be building dApps around any of these contracts since our focus is on learning AssemblyScript. Almost all of the code presented in this workshop is also running on [live examples](https://near.dev) where you will also find the frontend code that relies on these contracts._
 
 ## Environment Setup
 
-1. clone this repo locally (or open using Gitpod)
+1. clone this repo locally (or [open using Gitpod](https://gitpod.io#https://github.com/near-examples/workshop--exploring-assemblyscript-contracts))
 2. run `yarn` to install dependencies
 3. run `yarn test` to run tests
 4. run `yarn build` to build contracts
