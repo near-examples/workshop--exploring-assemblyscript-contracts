@@ -1,10 +1,14 @@
 {
+  "name": "workshop--exploring-assemblyscript-contracts",
+  "version": "0.0.1",
+  "description": "Learn to develop contracts for NEAR Protocol using AssemblyScript",
+  "author": "Near, Inc. <hello@near.org>",
   "license": "MIT",
   "scripts": {
     "build": "yarn build:contract",
     "build:contract": "node ../../../asconfig.js $(pwd)",
     "clean": "rm -rf ./out",
-    "test": "echo You must be at the top level to run most tests",
+    "test": "echo You must be at the top level to run unit tests",
     "test:simulate:runtime": "jest -f simulate.spec"
   },
   "devDependencies": {
