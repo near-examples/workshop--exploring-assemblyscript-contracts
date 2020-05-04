@@ -325,7 +325,7 @@ After reformatting, you should see something like the following response
 
 _Base Sixty What?_
 
-Just like human languages encode our thoughts into spoken words and printed text, data is encoded in different formats on computer systems depending on the use case. If data is "at rest", say on a backup drive, it can be encoded using a compression algorithm for better storage efficiency. And when data is "in motion", say between machines over HTTP, base64 is a good choice since the data less less likely to get corrupted during transfer.
+Just like human languages encode our thoughts into spoken words and printed text, data is encoded in different formats on computer systems depending on the use case. If data is "at rest", say on a backup drive, it can be encoded using a compression algorithm for better storage efficiency. And when data is "in motion", say between machines over HTTP, base64 is a good choice since the data less likely to get corrupted during transfer.
 
 The state "key" and "value" above were decoded using the code snippet below but we could just as easily have used a [website like this one](https://www.base64decode.org/).
 
@@ -393,7 +393,7 @@ You can read more about [accounts on NEAR Protocol here](https://docs.near.org/d
 
 There are two types of integration tests we can expect to use:
 
-- **NEAR Shell** serves as a console swiss army knife with the ability to manage accounts, contracts and more
+- **NEAR Shell** serves as a console Swiss army knife with the ability to manage accounts, contracts and more
 - **`near-api-js`** (our JavaScript API) wraps the NEAR JSON RPC API and exposes NEAR Wallet authentication
 
 Only the first, using NEAR Shell, will be addressed here in any depth. Its key limitation is that we cannot orchestrate cross-contract calls.
