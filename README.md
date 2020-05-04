@@ -6,6 +6,7 @@ This workshop includes several activities:
 
 - a **scavenger hunt** through several AssemblyScript projects to get you quickly oriented
 - a **debugging challenge** to fix a few failing unit tests with broken contracts
+- a **development lifecycle challenge** to guide you through NEAR platform tools for testing
 - a **design challenge** to create new contracts and related models that satisfy a set of requirements
 
 **Prerequisites**
