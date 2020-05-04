@@ -95,6 +95,7 @@ function compileReadable(fqPath, { relPath = "" }) {
     [
       "--validate", // validate the generated wasm module
       "--measure", // shows compiler run time
+      "--runPasses", "inlining-optimizing,dce", // inlines to optimize and removes deadcode
     ],
     { verbose: false } // output the cli args passed to asc
   );
@@ -125,7 +126,7 @@ function reportProgress(folder, output, includeWAT) {
 
 function reportFilesize(fqPath) {
   const stats = fs.statSync(fqPath);
-  console.log(`Filesize  : ${stats.size / 1000.0}kB`);
+  console.log(`Filesize  : ${stats.size / 1000.0}kb`);
 }
 
 function scanProjects() {
