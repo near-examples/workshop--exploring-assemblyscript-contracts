@@ -7,10 +7,10 @@ _This contract is part of a workshop on AssemblyScript_
 - [Design](#design)
   - [Interface](#interface)
   - [Models](#models)
-- [Build](#building)
+- [Building](#building)
   - [Readable Output](#readable-output)
   - [Cost Optimized Output](#cost-optimized-output)
-- [Test](#testing)
+- [Testing](#testing)
   - [Unit Tests](#unit-tests)
   - [Simulation Tests](#simulation-tests)
     - [Simulation Testing with `near-vm`](#simulation-testing-with-near-vm)
@@ -399,6 +399,8 @@ _Expected output_
 **(1) Authorize NEAR Shell to use your account**
 
 - You must create an account in this step if you don't already have one
+- _Using Gitpod?_
+  - Click **Open Preview** button (will appear in the middle of 3 blue buttons)
 
 ```text
 near login
@@ -480,6 +482,9 @@ Account greeting.<???>.testnet
 
 **(6) For each method of the contract, test it and observe the response**
 
+- _Using Gitpod?_
+  - Replace all instances of `<???>` to make the lines below match your new account for a smooth workflow
+
 **Test `showYouKnow()`**
 
 ```text
@@ -525,7 +530,7 @@ Scheduling a call: greeting.<???>.testnet.sayMyName()
 **Test `saveMyName()`**
 
 ```text
-near view greeting.<???>.testnet saveMyName --accountId <???>.testnet
+near call greeting.<???>.testnet saveMyName --accountId <???>.testnet
 ```
 
 _Expected outcome_
