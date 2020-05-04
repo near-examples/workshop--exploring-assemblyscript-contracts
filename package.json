@@ -12,7 +12,7 @@
     "test:unit": "asp --verbose -f unit.spec",
     "test:simulate:vm": "yarn near-vm",
     "test:simulate:vm:greeting": "yarn test:simulate:vm --wasm-file out/greeting.wasm",
-    "postinstall": "(cd assembly/A.sample-projects/01.greeting; yarn)"
+    "postinstall": "(cd assembly/A.sample-projects/01.greeting; yarn) && (cd assembly/A.sample-projects/07.cross-contract-calls; yarn)"
   },
   "devDependencies": {
     "assemblyscript": "^0.9.4",

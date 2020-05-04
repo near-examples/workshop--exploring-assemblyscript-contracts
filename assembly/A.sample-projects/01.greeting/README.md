@@ -4,8 +4,6 @@
 
 _This challenge is part of a larger workshop on AssemblyScript_
 
-## Contents
-
 - [Design](#design)
   - [Interface](#interface)
   - [Models](#models)
