@@ -7,6 +7,7 @@
   "scripts": {
     "build": "yarn build:contract",
     "build:contract": "node asconfig.js",
+    "build:contract:optimized": "yarn build:contract -O3z",
     "clean": "rm -rf ./out",
     "test": "echo You must be at the top level to run unit tests",
     "test:simulate:runtime": "jest -f simulate.spec"
