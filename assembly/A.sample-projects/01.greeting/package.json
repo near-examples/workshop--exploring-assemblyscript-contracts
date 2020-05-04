@@ -8,7 +8,6 @@
     "test:simulate:runtime": "jest -f simulate.spec"
   },
   "devDependencies": {
-    "jest": "^25.5.4",
-    "near-sdk-as": "^0.3.1"
+    "jest": "^25.5.4"
   }
 }
