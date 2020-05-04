@@ -613,6 +613,8 @@ Account greeting.<???>.testnet for network "default" was deleted.
 
 **END tldr;**
 
+For more support using the commands above, see [help with integration tests](assembly/A.sample-projects/01.greeting/HELP-integration-tests.md).
+
 #### Integration Tests with `near-api-js`
 
 `near-api-js` is a JavaScript / TypeScript library for development of dApps on the NEAR platform that can be used from any client or server-side JavaScript environment.
