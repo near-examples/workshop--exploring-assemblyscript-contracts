@@ -613,7 +613,7 @@ Account greeting.<???>.testnet for network "default" was deleted.
 
 **END tldr;**
 
-For more support using the commands above, see [help with integration tests](HELP-integration-tests.md).
+For more support using the commands above, see [help with NEAR Shell integration tests](near-shell-help.md).
 
 #### Integration Tests with `near-api-js`
 
