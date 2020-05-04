@@ -4,8 +4,8 @@
 
 This workshop includes several activities:
 
-- a **scavenger hunt** through several AssemblyScript contracts to get you quickly oriented
-- a **debugging challenge** to fix several problems with broken contracts
+- a **scavenger hunt** through several AssemblyScript projects to get you quickly oriented
+- a **debugging challenge** to fix a few failing unit tests with broken contracts
 - a **design challenge** to create new contracts and related models that satisfy a set of requirements
 
 **Prerequisites**
@@ -22,17 +22,32 @@ Manipulation of data is controlled by stored procedures (smart contracts) execut
 
 This workshop focuses on AssemblyScript as one of two currently supported languages for contract development on the NEAR platform.
 
-_We will not be building dApps around any of these contracts since our focus is on learning AssemblyScript. Almost all of the code presented in this workshop is also running on [live examples](https://near.dev) where you will also find the frontend code that relies on these contracts._
+_We will not be building dApps around any of these contracts since our focus is on learning AssemblyScript. Almost all of the contract code presented in this workshop is also running on [live examples](https://near.dev) where you will also find the frontend code that relies on these contracts._
 
 ## Environment Setup
 
-1. clone this repo locally (or [open using Gitpod](https://gitpod.io#https://github.com/near-examples/workshop--exploring-assemblyscript-contracts))
-2. run `yarn` to install dependencies
-3. run `yarn test` to run tests
-4. run `yarn build` to build contracts
-5. run `yarn mock` to deploy contracts to a local mock virtual machine for testing
+### Using Gitpod
 
-See `package.json` for more detail about these scripts.
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/near-examples/workshop--exploring-assemblyscript-contracts)
+
+### Local Setup
+
+1. clone this repo locally
+2. run `yarn` to install dependencies
+
+## Available commands
+
+### Building contracts
+
+- `yarn build` builds all contracts
+- `yarn build <contract name>` builds a specific contract
+- `yarn clean` deletes the `out` folder containing built contracts
+
+### Testing contracts
+
+- `yarn test` runs unit tests for all contracts
+
+See `package.json` for more detail about these and other scripts.
 
 You will find the following folder structure in this repository under the `assembly` folder.
 
@@ -63,20 +78,12 @@ assembly
 You can filter tests using the following syntax
 
 ```bash
-yarn test -f <contract name>
-# for example
-# yarn test -f greeting
+yarn test -f <contract name>.unit
 ```
 
-### Mock Deployment
+For example
 
-You must specify the contract file and method when attempting to execute the contract in the local mock virtual machine
-
-```bash
-yarn mock --wasm-file <path to contract .wasm file> --method-name <contract method name>
-# for example
-# yarn mock --wasm-file ./out/counter.wasm --method-name incrementCounter
-```
+`yarn test -f greeting.unit` or `yarn test -f counter.unit`
 
 _Note the projects are ordered by increasing complexity so lower numbers roughly implies "easier to understand"._
 
