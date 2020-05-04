@@ -12,5 +12,6 @@ function readDirR(dir) {
 
 readDirR(path.resolve(__dirname, "assembly"))
   .filter(dir => !dir.includes("/."))
+  .filter(dir => !dir.includes("cross-contract-calls"))
   .filter(dir => dir.includes("__tests__"))
   .map(dir => module.exports.include.push(dir))

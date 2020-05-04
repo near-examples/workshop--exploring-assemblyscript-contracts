@@ -131,6 +131,7 @@ function reportFilesize(fqPath) {
 function scanProjects() {
   return readDirR(path.resolve(__dirname, "assembly")) // only AssemblyScript files
     .filter((fqPath) => fqPath.includes(PROJECTS_DIR)) // in the A.scavenger-hunt folder
+    .filter((fqPath) => !fqPath.includes("cross-contract-calls")) // ignore cross contract calls
     .filter((fqPath) => fqPath.includes("main.ts")); // just the contract entry points
 }
 
