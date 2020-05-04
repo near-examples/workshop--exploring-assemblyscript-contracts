@@ -96,9 +96,16 @@ _Note the projects are ordered by increasing complexity so lower numbers roughly
 
 ## Activity::Scavenger Hunt
 
-Keep your own notes. Time permitting, we will share and discuss your findings and answer questions at the end of the activity.
+> _Instructions_
+>
+> 1. Scan the items to scavenge (ie. to find) in the lists below
+> 2. For the most interesting ones, look for them in the folder called `A.sample-projects`
+>
+> All of them appear in contract files (`main.ts` and `model.ts`) or their unit tests (`*.unit.spec.ts`)
+>
+> Keep your own notes. Time permitting, we will share and discuss your findings and answer questions at the end of the activity.
 
-**Orientation**
+**First Steps**
 
 _Note, some of these may only take you **a few seconds** to complete so don't overthink things. This activity is about massive exposure to several examples of smart contracts written using AssemblyScript for the NEAR platform._
 
@@ -149,13 +156,16 @@ Find examples of the following:
 
 ## Activity::Debugging Challenge
 
-Debug as many of the following problems as you can. They are ordered by increasing difficulty.
-
-> **Important Note**
+> _Instructions_
 >
-> _None of the tests were altered_.
+> Debug as many of the following problems as you can.
 >
-> Only the `main.ts` contract file and / or the `model.ts` model file were changed from the original to create the problems you see in these failing tests or failures to compile the code.
+> - They are ordered by increasing difficulty.
+> - All of the related files appear in the folder called `B.debugging-challenge`
+> - **None of the tests were altered**. Only the `main.ts` contract file and / or the `model.ts` model file were changed from the original to create the problems you see in these failing tests or failures to compile the code.
+> - You know you're finished when the tests pass
+>
+> Keep your own notes. Time permitting, we will share and discuss your findings and answer questions at the end of the activity.
 
 ### Broken Greeting
 
@@ -217,20 +227,33 @@ Note, in this challenge, some of the issues are preventing the code from the com
 
 ## Activity::Development Lifecycle
 
+> _Instructions_
+>
+> Open the challenge linked in this section
+>
+> - All related code is located in `A.sample-projects/01.greeting`
+>
+> Keep your own notes. Time permitting, we will share and discuss your findings and answer questions at the end of the activity.
+
 Let's explore the contract development lifecycle on NEAR Protocol.
 
 We will start with a simple but instructive contract design and explore the contract interface (hint: you've seen it already), build the contract (with a quick peek at the WebAssembly text format), and finally test the contract using unit tests, simulation tests and integration tests.
 
 As we move from end-to-in in this process, focus on the parts that are most interesting to you and feel free to skip the parts that are boring or maybe overwhelming. Come back anytime.
 
-[Start the **Development Lifecycle** challenge](assembly/A.sample-projects/01.greeting/README.md)
+[Open the **Development Lifecycle** challenge](assembly/A.sample-projects/01.greeting/README.md)
 
 ## Activity::Design Challenge
 
-Choose one of the following projects and write the model(s) and contract(s) that satisfy the following requirements. Include unit tests of course. Test everything locally using `yarn mock`.
+> _Instructions_
+>
+> 1. Choose one of the following projects and write the model(s) and contract(s) that satisfy the following requirements.
+> 2. Write unit tests for all models and contracts.
+>
+> Keep your own notes. Time permitting, we will share and discuss your findings and answer questions at the end of the activity.
 
 **Important Note:**
-The design guidelines below are almost certainly incomplete. They are intended to inspire you to consider the design challenge on your own or with your pair or team. Feel free to run with these ideas and do not be constrained by what you see here.
+The design guidelines below are almost certaginly incomplete. They are intended to inspire you to consider the design challenge on your own or with your pair or team. Feel free to run with these ideas and do not be constrained by what you see here.
 
 ### PinkyPromise
 
