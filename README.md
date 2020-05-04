@@ -51,7 +51,7 @@ See `package.json` for more detail about these and other scripts.
 
 You will find the following folder structure in this repository under the `assembly` folder.
 
-```bash
+```text
 assembly
 │
 ├── A.sample-projects
@@ -77,7 +77,7 @@ assembly
 
 You can filter tests using the following syntax
 
-```bash
+```text
 yarn test -f <contract name>.unit
 ```
 
