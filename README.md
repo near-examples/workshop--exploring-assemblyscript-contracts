@@ -91,93 +91,132 @@ _Note the projects are ordered by increasing complexity so lower numbers roughly
 
 Keep your own notes. Time permitting, we will share and discuss your findings and answer questions at the end of the activity.
 
-Find examples of the following.
-
 **Orientation**
 
 _Note, some of these may only take you **a few seconds** to complete so don't overthink things. This activity is about massive exposure to several examples of smart contracts written using AssemblyScript for the NEAR platform._
 
+Find examples of the following:
+
 - [ ] a contract method that takes no parameters
 - [ ] a contract method that takes one parameter
 - [ ] a model used by a contract method
-- [ ] a failing unit test
-- [ ] a passing unit test
-- [ ] unit testing log output from the NEAR Virtual Machine (VM)
-- [ ] unit testing the instantiation of a model (ie. `new ModelName()`)
-- [ ] unit testing a contract method
-- [ ] unit testing a method on a model
 
-**Storing Data**
+**Models Organize and Serialize Data**
 
-NEAR Protocol stores data in a key-value store called `Storage` which is also wrapped with a few persistent collections for developer convenience including `PersistentVector`, `PersistentSet`, `PersistentMap` and `PersistentDeque`. Reading and writing to `Storage` requires specifying the type of data to store, whether `string`, `number` or `binary`. Any custom data types (ie. custom data models) must be decorated with the `@nearBindgen` decorator so that the system knows to serialize them for storage.
+NEAR Protocol stores data in a key-value store called `Storage`. For developer convenience when building more complex dApps, `Storage` also wrapped by a few other persistent collections including `PersistentVector`, `PersistentSet`, `PersistentMap` and `PersistentDeque`.
 
-- [ ] an example that includes the `@nearBindgen` decorator (used to support serialization of custom data models)
-- [ ] an example that uses `Storage` to read and / or write data from blockchain storage
-- [ ] an example that uses `PersistentVector` to store contract data in an array-like data structure
-- [ ] an example that uses `PersistentMap` to store contract data in a map-like data structure
-- [ ] an example that uses `PersistentDeque` to store contract data in a queue-like data structure
-- [ ] an example that uses `PersistentSet` to store contract data in a set-like data structure
-- [ ] an example that uses the `getPrimitive<T>()` method on the `Storage` class
-- [ ] an example that uses the `getString()` method on the `Storage` class
-- [ ] an example that uses the `setString()` method on the `Storage` class
+Reading and writing to `Storage` requires specifying the type of data to store, whether `string`, `number` or `binary`.
 
-**Contract Context**
+All custom data types (ie. custom data models) must be decorated with the `@nearBindgen` decorator so that the system knows to serialize when storing and deserialize when retrieving them.
 
-NEAR Protocol accounts are initially created without an associated contract. Each account can have a maximum of 1 contract deployed to its storage. The account maintains a copy of the contract code as well as any state storage consumed by the contract. You can read more about [accounts on the NEAR platform here](https://docs.nearprotocol.com/docs/concepts/account).
+Find examples of the following:
 
-- [ ] an example of using `context.sender` which represents the account that signed the current transaction
+- [ ] use of `Storage` to read and / or write data from blockchain storage
+- [ ] use of `PersistentVector` to store contract data in an array-like data structure
+- [ ] use of `PersistentMap` to store contract data in a map-like data structure
+- [ ] use of `PersistentDeque` to store contract data in a queue-like data structure
+- [ ] use of `PersistentSet` to store contract data in a set-like data structure
+- [ ] an example that includes the `@nearBindgen` decorator
+- [ ] use of the `getPrimitive<T>()` method on the `Storage` class
+- [ ] use of the `getString()` method on the `Storage` class
+- [ ] use of the `setString()` method on the `Storage` class
+
+**Contracts Expose an Interface**
+
+NEAR Protocol accounts are initially created without an associated contract. Each account can have a maximum of 1 contract deployed to its storage (although a contract may be deployed to many accounts).
+
+Each account maintains it's own copy of a contract code as well as any state storage consumed by the contract during normal operation. You can read more about [accounts on the NEAR platform here](https://docs.nearprotocol.com/docs/concepts/account).
+
+Find examples of the following:
+
+- [ ] use of `context.sender` which represents the account that signed the current transaction
 - [ ] an example of a unit test where the test explicitly sets the `signer_account_id` to control `context.sender`
-- [ ] an example of using `context.contractName` which represents the account on which the contract lives
+- [ ] use of `context.contractName` which represents the account on which the contract lives
 - [ ] an example of a unit test where the test explicitly sets the `current_account_id` to control `context.contractName`
-- [ ] an example of using `context.attachedDeposit` to capture the tokens attached to a contract function call
+- [ ] use of `context.attachedDeposit` to capture the tokens attached to a contract function call
 - [ ] an example of a unit test where the test explicitly sets the `attached_deposit` to control `context.attachedDeposit`
 
 **Validation**
 
-- [ ] an example of using `assert()` to guarantee that some value meets the necessary criteria
+- [ ] use of `assert()` in a contract method to guarantee that some value meets the necessary criteria
 
 ## Activity::Debugging Challenge
 
 Debug as many of the following problems as you can. They are ordered by increasing difficulty.
 
-**Important Note:**
-None of the tests were altered, only the `main.ts` contract file and / or the `model.ts` model file were changed from the original to create the problems you see in these failing tests or failures to compile the code.
+> **Important Note**
+>
+> _None of the tests were altered_.
+>
+> Only the `main.ts` contract file and / or the `model.ts` model file were changed from the original to create the problems you see in these failing tests or failures to compile the code.
 
 ### Broken Greeting
 
-- [ ] run `yarn test -f broken-greeting` and solve the issues (there are 4 of them)
+- [ ] run `yarn test -f broken-greeting` and fix the failing unit tests
 
 <details>
   <summary><em>Reveal hints</em></summary>
   <ul>
-    <li>try running this in your console from the root of the project<br><code>diff assembly/A.sample-projects/01.greeting/main.ts assembly/B.debugging-challenge/01.broken-greeting/main.ts</code></li>
+    <li>Run this command in the terminal to reveal the needed fixes<br><code>git diff --no-index assembly/B.debugging-challenge/01.broken-greeting/main.ts assembly/A.sample-projects/01.greeting/main.ts</code></li>
   </ul>
 </details>
 
+**You know you're finished when** the unit tests are all passing and you see something like this:
+
+```text
+[Describe]: 01. Greeting
+
+ [Success]: ✔ should respond to showYouKnow()
+ [Success]: ✔ should respond to sayHello()
+ [Success]: ✔ should respond to sayMyName()
+ [Success]: ✔ should respond to saveMyName()
+ [Success]: ✔ should respond to saveMyMessage()
+ [Success]: ✔ should respond to getAllMessages()
+
+    [File]: B.debugging-challenge/01.broken-greeting/__tests__/greeting.spec.ts
+  [Groups]: 2 pass, 2 total
+  [Result]: ✔ PASS
+[Snapshot]: 0 total, 0 added, 0 removed, 0 different
+ [Summary]: 6 pass,  0 fail, 6 total
+    [Time]: 13.597ms
+```
+
 ### Broken Counter
 
-- [ ] run `yarn test -f broken-counter` and solve the issues (there are 5 of them)
+- [ ] run `yarn test -f broken-counter` and fix the failing unit tests
 
 <details>
   <summary><em>Reveal hints</em></summary>
   <ul>
-    <li>one error is preventing the code from compiling so none of the other tests are running.  solve the compiler error first so you can see the failing tests</li>
-    <li>try running this in your console from the root of the project<br><code>diff assembly/A.sample-projects/03.counter/main.ts assembly/B.debugging-challenge/03.broken-counter/main.ts</code></li>
+    <li>One error is preventing the code from compiling so none of the other tests are running.  solve the compiler error first so you can see the failing tests</li>
+    <li>Run this command in the terminal to reveal the needed fixes<br><code>git diff --no-index assembly/A.sample-projects/03.counter/main.ts assembly/B.debugging-challenge/03.broken-counter/main.ts</code></li>
   </ul>
 </details>
 
 ### Broken Guestbook
 
-- [ ] run `yarn test -f broken-guestbook` and solve the issues (there are several of them and many are preventing the code from compiling).
+- [ ] run `yarn test -f broken-guestbook` and fix the failing unit tests
+
+Note, in this challenge, some of the issues are preventing the code from the compiling in the first place, so the tests aren't even running.
 
 <details>
   <summary><em>Reveal hints</em></summary>
   <li><code>@nearBindgen</code> is a decorator added to custom models so they can be serialized and stored on chain</li>
-  <li>persistent collections like <code>PersistentVector<T></code>require a type parameter which will often be the model you are trying to store on chain</li>
-  <li>you can get the account name of the user that calls a function using <code>context.sender</code></li>
-  <li>try running this in your console from the root of the project<br><code>diff assembly/A.sample-projects/05.guestbook/main.ts assembly/B.debugging-challenge/05.broken-guestbook/main.ts</code></li>
-  <li>try running this in your console from the root of the project<br><code>diff assembly/A.sample-projects/05.guestbook/model.ts assembly/B.debugging-challenge/05.broken-guestbook/model.ts</code></li>
+  <li>Persistent collections like <code>PersistentVector<T></code>require a type parameter which will often be the model you are trying to store on chain</li>
+  <li>You can get the account name of the user that calls a function using <code>context.sender</code></li>
+  <li>Run this command in the terminal to reveal the needed fixes for the <strong>contract</strong><br><code>git diff --no-index assembly/A.sample-projects/05.guestbook/main.ts assembly/B.debugging-challenge/05.broken-guestbook/main.ts</code></li>
+  <li>Run this command in the terminal to reveal the needed fixes for the <strong>model</strong><br><code>git diff --no-index assembly/A.sample-projects/05.guestbook/model.ts assembly/B.debugging-challenge/05.broken-guestbook/model.ts</code></li>
 </details>
+
+## Activity::Development Lifecycle
+
+Let's explore the contract development lifecycle on NEAR Protocol.
+
+We will start with a simple but instructive contract design and explore the contract interface (hint: you've seen it already), build the contract (with a quick peek at the WebAssembly text format), and finally test the contract using unit tests, simulation tests and integration tests.
+
+As we move from end-to-in in this process, focus on the parts that are most interesting to you and feel free to skip the parts that are boring or maybe overwhelming. Come back anytime.
+
+[Start the **Development Lifecycle** challenge](assembly/A.sample-projects/01.greeting/README.md)
 
 ## Activity::Design Challenge
 
