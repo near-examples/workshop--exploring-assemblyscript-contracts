@@ -613,7 +613,7 @@ Account greeting.<???>.testnet for network "default" was deleted.
 
 **END tldr;**
 
-For more support using the commands above, see [help with integration tests](assembly/A.sample-projects/01.greeting/HELP-integration-tests.md).
+For more support using the commands above, see [help with integration tests](HELP-integration-tests.md).
 
 #### Integration Tests with `near-api-js`
 
