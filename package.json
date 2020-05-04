@@ -11,8 +11,7 @@
     "test": "yarn test:unit",
     "test:unit": "asp --verbose -f unit.spec",
     "test:simulate:vm": "yarn near-vm",
-    "test:simulate:vm:greeting": "yarn test:simulate:vm --wasm-file out/greeting.wasm",
-    "test:integrate": "yarn near deploy"
+    "test:simulate:vm:greeting": "yarn test:simulate:vm --wasm-file out/greeting.wasm"
   },
   "devDependencies": {
     "assemblyscript": "^0.9.4",
