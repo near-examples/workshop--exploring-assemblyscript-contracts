@@ -1,6 +1,8 @@
-# Contract: Greeting
+![Near, Inc. logo](https://nearprotocol.com/wp-content/themes/near-19/assets/img/logo.svg?t=1553011311)
 
-_This contract is part of a workshop on AssemblyScript_
+# NEAR Protocol Workshop :: Development Lifecycle Challenge
+
+_This challenge is part of a larger workshop on AssemblyScript_
 
 ## Contents
 
