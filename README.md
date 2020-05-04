@@ -97,7 +97,7 @@ _Note the projects are ordered by increasing complexity so lower numbers roughly
 
 ## Activity::Scavenger Hunt
 
-> _Instructions_
+> **_Instructions_**
 >
 > 1. Scan the items to scavenge (ie. to find) in the lists below
 > 2. For the most interesting ones, look for them in the folder called `A.sample-projects`
@@ -157,7 +157,7 @@ Find examples of the following:
 
 ## Activity::Debugging Challenge
 
-> _Instructions_
+> **_Instructions_**
 >
 > Debug as many of the following problems as you can.
 >
@@ -228,7 +228,7 @@ Note, in this challenge, some of the issues are preventing the code from the com
 
 ## Activity::Development Lifecycle
 
-> _Instructions_
+> **_Instructions_**
 >
 > Open the challenge linked in this section
 >
@@ -246,7 +246,7 @@ As we move from end-to-in in this process, focus on the parts that are most inte
 
 ## Activity::Design Challenge
 
-> _Instructions_
+> **_Instructions_**
 >
 > 1. Choose one of the following projects and write the model(s) and contract(s) that satisfy the following requirements.
 > 2. Write unit tests for all models and contracts.
