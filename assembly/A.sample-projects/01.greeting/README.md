@@ -121,7 +121,7 @@ Filesize  : 14.666kb
 
 You should now be able to see the`.wasm` and `.wat` files for this contract in a folder called `out`.
 
-Consider scanning the WAT file for any recognizable strings, you may be surprised at what you find.  Since it's almost 10k lines long, you can search for the method names included in the interface above or scroll from the top of the file down to about line 200 or so for maximum benefit.
+Consider scanning the WAT file for any recognizable strings, you may be surprised at what you find. Since it's almost 10k lines long, you can search for the method names included in the interface above or scroll from the top of the file down to about line 200 or so for maximum benefit.
 
 If interested, these links will help you make sense of the WAT format you just saw:
 
@@ -133,7 +133,7 @@ If interested, these links will help you make sense of the WAT format you just s
 To generate a speedy, size-optimized version of this contract (which will ultimately cost less to maintain):
 
 1. **move to the repository _root_ folder** (where the **main** workshop `README.md` appears)
-2. **run** `yarn build greeting` 
+2. **run** `yarn build greeting`
 
 You should see something like
 
@@ -159,19 +159,20 @@ Filesize  : 14.669kb
 
 _Which folder should I be in while running these commands?_
 
-Almost all terminal commands in this workshop should be executed in the repository's **root folder**. 
+Almost all terminal commands in this workshop should be executed in the repository's **root folder**.
 
-The *only* 2 cases when it's useful to execute a command in a sample project folder are 
-- if you want to generate the `.wat` file or 
+The _only_ 2 cases when it's useful to execute a command in a sample project folder are
+
+- if you want to generate the `.wat` file or
 - if you want to run simulation tests (more on this later)
 
 _Compiling AssemblyScript?_
 
-If you're curious about the differences between the two compilation processes used above, take a look at the file called `asconfig.js` (in the repository root folder) where you'll find two functions, `compileReadable` and `compileOptimized`.  You'll find the functions differ in switches passed to the compiler.  You could try changing the switches to see the difference in output.
+If you're curious about the differences between the two compilation processes used above, take a look at the file called `asconfig.js` (in the repository root folder) where you'll find two functions, `compileReadable` and `compileOptimized`. You'll find the functions differ in switches passed to the compiler. You could try changing the switches to see the difference in output.
 
 _Using Gitpod?_
 
-Please feel encouraged to edit any and all files in this repo while you explore.  A reset of this environment is just a click away: just head back to the main `README` and reopen this workshop in Gitpod if you ever get stuck.
+Please feel encouraged to edit any and all files in this repo while you explore. A reset of this environment is just a click away: just head back to the main `README` and reopen this workshop in Gitpod if you ever get stuck.
 
 ## Test
 
@@ -249,7 +250,7 @@ Run the following commands to simulate calling the method `sayMyName` on this co
    yarn test:simulate:vm:greeting --method-name sayMyName
    ```
 
-You should see something like the following response 
+You should see something like the following response
 
 ```text
 {"outcome":{"balance":"10000000000000000000000000","storage_usage":100,"return_data":{"Value":"\"Hello, bob!\""},"burnt_gas":41812607821,"used_gas":41812607821,"logs":["sayMyName() was called"]},"err":null,"receipts":[],"state":{}}
@@ -322,13 +323,13 @@ After reformatting, you should see something like the following response
 
 _Base Sixty What?_
 
-Just like human languages encode our thoughts into spoken words and printed text, data is encoded in different formats on computer systems depending on the use case.  If data is "at rest", say on a backup drive, it can be encoded using a compression algorithm for better storage efficiency.  And when data is "in motion", say between machines over HTTP, base64 is a good choice since the data less less likely to get corrupted during transfer.
+Just like human languages encode our thoughts into spoken words and printed text, data is encoded in different formats on computer systems depending on the use case. If data is "at rest", say on a backup drive, it can be encoded using a compression algorithm for better storage efficiency. And when data is "in motion", say between machines over HTTP, base64 is a good choice since the data less less likely to get corrupted during transfer.
 
-The state "key" and "value" above were decoded using the code snippet below but we could just as easily have used a [website like this one](https://www.base64decode.org/). 
+The state "key" and "value" above were decoded using the code snippet below but we could just as easily have used a [website like this one](https://www.base64decode.org/).
 
 ```js
-const key = "c2VuZGVy"
-const value = "Ym9i"
+const key = "c2VuZGVy";
+const value = "Ym9i";
 const decodedKey = Buffer.from(key, "base64").toString("utf8");
 const decodedValue = Buffer.from(value, "base64").toString("utf8");
 console.log(decodedKey, decodedValue);
@@ -341,7 +342,7 @@ At a very high level, testing with the Runtime API allows us, using JavaScript, 
 To try this out:
 
 1. **move to the _sample project_ folder** (where **this** `README.md` appears: `01.greeting/`)
-2. run `yarn` inside that folder *(we will use Jest for this)*
+2. run `yarn` inside that folder _(we will use Jest for this)_
 3. run `yarn build` to build `greeting.wasm` locally (just as we did when browsing the `.wat` file earlier)
 4. run `yarn test:simulate:runtime`
 
@@ -393,9 +394,9 @@ There are two types of integration tests we can expect to use:
 - **NEAR Shell** serves as a console swiss army knife with the ability to manage accounts, contracts and more
 - **`near-api-js`** (our JavaScript API) wraps the NEAR JSON RPC API and exposes NEAR Wallet authentication
 
-Only the first, using NEAR Shell, will be addressed here in any depth. Its key limitation is that we cannot orchestrate cross-contract calls. 
+Only the first, using NEAR Shell, will be addressed here in any depth. Its key limitation is that we cannot orchestrate cross-contract calls.
 
-We will use NEAR Shell to login to our own user account and then use it again to create a new account for our contract before we deploy, verify, and invoke methods on the contract.  Finally, we will delete the contract account to clean up after ourselves. We will rely on other tools like [NEAR Explorer](https://explorer.nearprotocol.com/) for transaction visibility, history and more.
+We will use NEAR Shell to login to our own user account and then use it again to create a new account for our contract before we deploy, verify, and invoke methods on the contract. Finally, we will delete the contract account to clean up after ourselves. We will rely on other tools like [NEAR Explorer](https://explorer.nearprotocol.com/) for transaction visibility, history and more.
 
 #### Integration Tests with NEAR Shell
 
