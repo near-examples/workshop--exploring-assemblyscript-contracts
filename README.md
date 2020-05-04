@@ -11,7 +11,7 @@ This workshop includes several activities:
 
 **Prerequisites**
 
-If you're already comfortable with TypeScript then reading AssemblyScript should be a breeze. If you're coming from JavaScript, you'll have to get your head around `types` (since JavaScript doesn't have them) but reading through the samples here should not be too difficult. If you have no programming experience then this workshop will be challenging for you -- find someone to pair with so you can stay motivated and productive.
+If you're already comfortable with TypeScript then reading AssemblyScript should be a breeze. If you're coming from JavaScript, you'll have to get your head around `static types` and code compilation (since JavaScript has dynamic types and is an interpreted language) but reading through the samples here should not be too difficult. If you have no programming experience then this workshop will be challenging for you -- find someone to pair with so you can stay motivated and productive.
 
 **Companion Presentation**
 
