@@ -1,5 +1,4 @@
-const { Runtime, encodeBs64 } = require("near-sdk-as/runtime");
-const path = require("path");
+const { Runtime } = require("near-sdk-as/runtime");
 
 const WASM_FILE = __dirname + "/../out/greeting.wasm";
 

@@ -25,9 +25,7 @@ If you're totally new to NEAR you can [start here](https://docs.near.org/docs/qu
 
 NEAR Protocol (aka "NEAR") is a public peer-to-peer key-value database. Public as in open to everyone for reading anything and writing what you are allowed to. Write permissions are defined by access keys so only the owner of the data can give permissions to modify data they own.
 
-Manipulation of data is controlled by stored procedures (smart contracts) executing as [Wasm](https://webassembly.org) which means they can be implemented in any programming language that compiles to Wasm (ie. Rust, AssemblyScript, Kotlin, C, C++, Nim, Zig, etc).
-
-This workshop focuses on AssemblyScript as one of two currently supported languages for contract development on the NEAR platform.
+Manipulation of data is controlled by stored procedures (smart contracts) executing as [WebAssembly (Wasm)](https://webassembly.org) which means they can be implemented in any programming language that compiles to Wasm (ie. Rust, AssemblyScript, Kotlin, C, C++, Nim, Zig, etc).  Currently only the first two languages are supported for development on the NEAR platform.
 
 _We will not be building dApps around any of these contracts since our focus is on learning AssemblyScript. Almost all of the contract code presented in this workshop is also running on [live examples](https://near.dev) where you will also find the frontend code that relies on these contracts._
 
@@ -89,7 +87,7 @@ You can filter tests using the following syntax
 yarn test -f <contract name>.unit
 ```
 
-For example
+For example:
 
 `yarn test -f greeting.unit` or `yarn test -f counter.unit`
 
@@ -114,11 +112,11 @@ Find examples of the following:
 
 - [ ] a contract method that takes no parameters
 - [ ] a contract method that takes one parameter
-- [ ] a model used by a contract method
+- [ ] a model passed to a contract method
 
 **Models Organize and Serialize Data**
 
-NEAR Protocol stores data in a key-value store called `Storage`. For developer convenience when building more complex dApps, `Storage` also wrapped by a few other persistent collections including `PersistentVector`, `PersistentSet`, `PersistentMap` and `PersistentDeque`.
+NEAR Protocol stores data in a key-value store called `Storage`. For developer convenience when building more complex dApps, `Storage` is also wrapped by a few other persistent collections including `PersistentVector`, `PersistentSet`, `PersistentMap` and `PersistentDeque`.
 
 Reading and writing to `Storage` requires specifying the type of data to store, whether `string`, `number` or `binary`.
 

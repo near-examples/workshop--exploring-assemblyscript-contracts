@@ -95,6 +95,7 @@ function compileReadable(fqPath, { relPath = "" }) {
     [
       "--validate", // validate the generated wasm module
       "--measure", // shows compiler run time
+      "--runPasses", "inlining-optimizing,dce", // inlines to optimize and removes deadcode
     ],
     { verbose: false } // output the cli args passed to asc
   );
