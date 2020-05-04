@@ -12,6 +12,12 @@ This workshop includes several activities:
 
 If you're already comfortable with TypeScript then reading AssemblyScript should be a breeze. If you're coming from JavaScript, you'll have to get your head around `types` (since JavaScript doesn't have them) but reading through the samples here should not be too difficult. If you have no programming experience then this workshop will be challenging for you -- find someone to pair with so you can stay motivated and productive.
 
+**Companion Presentation**
+
+This hands-on workshop is paired with a presentation called [Hello AssemblyScript](https://docs.google.com/presentation/d/1Sz823KGP_dI2bNUoTlQtphI3Sz2Jej5bmYl-oYhp5HM) which helps set the context for this work and clarifies a few key mental models.
+
+Before diving into this workshop, have a look at the slides linked above.
+
 **Orientation**
 
 If you're totally new to NEAR you can [start here](https://docs.nearprotocol.com/docs/quick-start/new-to-near) with a high level overview.
