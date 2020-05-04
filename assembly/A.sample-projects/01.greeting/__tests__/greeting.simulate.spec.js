@@ -1,4 +1,4 @@
-const { Runtime } = require("near-sdk-as/runtime");
+const { Runtime, encodeBs64 } = require("near-sdk-as/runtime");
 const path = require("path");
 
 const WASM_FILE = __dirname + "/../out/greeting.wasm";
@@ -173,9 +173,10 @@ describe("Greeting ", () => {
 
       const { result } = simulate(transaction);
 
-      // "c2VuZGVy" is "sender" in base64
+      // "c2VuZGVy" is " in base64
       // "YWxpY2U=" is "alice" in base64
-      expect(result.state).toHaveProperty("c2VuZGVy", "YWxpY2U=");
+      console.log(result.state);
+      expect(result.state).toHaveProperty("sender", "alice");
 
       expectToFind("saveMyName() was called", {
         inArray: result.outcome.logs,
@@ -197,11 +198,11 @@ describe("Greeting ", () => {
 
       expect(data).toBeTruthy();
 
-      // "bWVzc2FnZXM6Oi0x" is "messages::-1" in base64
+      // "bWVzc2FnZXM6Oi0x" is  in base64
       // "YWxpY2Ugc2F5cyBhd2Vzb21lc2F1Y2Uh" is "alice says awesomesauce" in base64
       expect(result.state).toHaveProperty(
-        "bWVzc2FnZXM6Oi0x",
-        "YWxpY2Ugc2F5cyBhd2Vzb21lc2F1Y2Uh"
+        "messages::-1",
+        "alice says awesomesauce"
       );
 
       expectToFind("saveMyMessage() was called", {
