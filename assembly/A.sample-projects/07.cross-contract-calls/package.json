@@ -1,0 +1,21 @@
+{
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn build:contract",
+    "build:contract": "node asconfig.js",
+    "clean": "rm -rf ./out",
+    "test:simulate:runtime": "jest -f simulate.spec",
+    "test:unit": "asp --verbose",
+    "test": "yarn test:unit"
+  },
+  "devDependencies": {
+    "jest": "^25.5.4",
+    "near-sdk-as": "^0.3.1",
+    "assemblyscript": "^0.9.4",
+    "near-shell": "^0.21.0",
+    "near-vm": "^0.0.3"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}
