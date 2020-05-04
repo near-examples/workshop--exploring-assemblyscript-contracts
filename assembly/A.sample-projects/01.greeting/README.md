@@ -1,4 +1,4 @@
-![Near, Inc. logo](https://nearprotocol.com/wp-content/themes/near-19/assets/img/logo.svg?t=1553011311)
+![Near, Inc. logo](https://near.org/wp-content/themes/near-19/assets/img/logo.svg?t=1553011311)
 
 # NEAR Protocol Workshop :: Development Lifecycle Challenge
 
@@ -45,7 +45,7 @@ export function sayHello(): string;
 export function sayMyName(): string;
 ```
 
-- "Call" function (although it does NOT alter state, it DOES read from `context`, [see docs for details](https://docs.nearprotocol.com/docs/roles/developer/contracts/assemblyscript#potential-gotchas))
+- "Call" function (although it does NOT alter state, it DOES read from `context`, [see docs for details](https://docs.near.org/docs/roles/developer/contracts/assemblyscript#potential-gotchas))
 - Takes no parameters
 - Returns a string
 
@@ -387,7 +387,7 @@ In the next section about integration tests where we will be working with a live
 
 We will deploy the contract to a specific account (ie. the contract account) on the network (ie. TestNet) and call contract methods from a **different** account (ie. our user account).
 
-You can read more about [accounts on NEAR Protocol here](https://docs.nearprotocol.com/docs/concepts/account).
+You can read more about [accounts on NEAR Protocol here](https://docs.near.org/docs/concepts/account).
 
 ### Integration Tests
 
@@ -398,7 +398,7 @@ There are two types of integration tests we can expect to use:
 
 Only the first, using NEAR Shell, will be addressed here in any depth. Its key limitation is that we cannot orchestrate cross-contract calls.
 
-We will use NEAR Shell to login to our own user account and then use it again to create a new account for our contract before we deploy, verify, and invoke methods on the contract. Finally, we will delete the contract account to clean up after ourselves. We will rely on other tools like [NEAR Explorer](https://explorer.nearprotocol.com/) for transaction visibility, history and more.
+We will use NEAR Shell to login to our own user account and then use it again to create a new account for our contract before we deploy, verify, and invoke methods on the contract. Finally, we will delete the contract account to clean up after ourselves. We will rely on other tools like [NEAR Explorer](https://explorer.near.org/) for transaction visibility, history and more.
 
 #### Integration Tests with NEAR Shell
 
@@ -443,7 +443,7 @@ near login
 - We assume you already created `<???>.testnet` in the previous step
 
 ```text
-near create_account greeting.<???>.testnet --masterAccount <???>.testnet --helperUrl https://helper.nearprotocol.com
+near create_account greeting.<???>.testnet --masterAccount <???>.testnet --helperUrl https://helper.near.org
 ```
 
 _Expected output_
@@ -478,7 +478,7 @@ near deploy --wasm-file out/greeting.wasm --accountId greeting.<???>.testnet
 _Expected output_
 
 ```text
-Starting deployment. Account id: greeting.<???>.testnet, node: https://rpc.testnet.nearprotocol.com, helper: https://helper.testnet.nearprotocol.com, file: out/greeting.wasm
+Starting deployment. Account id: greeting.<???>.testnet, node: https://rpc.testnet.near.org, helper: https://helper.testnet.near.org, file: out/greeting.wasm
 ```
 
 **(5) Verify deployment of the correct contract to the intended**
@@ -608,7 +608,7 @@ near delete greeting.<???>.testnet <???>.testnet
 _Expected outcome_
 
 ```text
-Deleting account. Account id: greeting.<???>.testnet, node: https://rpc.testnet.nearprotocol.com, helper: https://helper.testnet.nearprotocol.com, beneficiary: <???>.testnet
+Deleting account. Account id: greeting.<???>.testnet, node: https://rpc.testnet.near.org, helper: https://helper.testnet.near.org, beneficiary: <???>.testnet
 Account greeting.<???>.testnet for network "default" was deleted.
 
 ```
@@ -627,4 +627,4 @@ We use `near-api-js` internally in tools like NEAR Shell and NEAR Wallet.
 
 You would use `near-api-js` as your primary interface with the NEAR platform anytime you are writing JavaScript (client or server-side).
 
-See our [documentation for more details](https://docs.nearprotocol.com/docs/roles/developer/examples/near-api-js/introduction).
+See our [documentation for more details](https://docs.near.org/docs/roles/developer/examples/near-api-js/introduction).

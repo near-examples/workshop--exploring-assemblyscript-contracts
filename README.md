@@ -1,4 +1,4 @@
-![Near, Inc. logo](https://nearprotocol.com/wp-content/themes/near-19/assets/img/logo.svg?t=1553011311)
+![Near, Inc. logo](https://near.org/wp-content/themes/near-19/assets/img/logo.svg?t=1553011311)
 
 # NEAR Protocol Workshop :: Exploring AssemblyScript Contracts
 
@@ -21,7 +21,7 @@ Before diving into this workshop, have a look at the slides linked above.
 
 **Orientation**
 
-If you're totally new to NEAR you can [start here](https://docs.nearprotocol.com/docs/quick-start/new-to-near) with a high level overview.
+If you're totally new to NEAR you can [start here](https://docs.near.org/docs/quick-start/new-to-near) with a high level overview.
 
 NEAR Protocol (aka "NEAR") is a public peer-to-peer key-value database. Public as in open to everyone for reading anything and writing what you are allowed to. Write permissions are defined by access keys so only the owner of the data can give permissions to modify data they own.
 
@@ -140,7 +140,7 @@ Find examples of the following:
 
 NEAR Protocol accounts are initially created without an associated contract. Each account can have a maximum of 1 contract deployed to its storage (although a contract may be deployed to many accounts).
 
-Each account maintains it's own copy of a contract code as well as any state storage consumed by the contract during normal operation. You can read more about [accounts on the NEAR platform here](https://docs.nearprotocol.com/docs/concepts/account).
+Each account maintains it's own copy of a contract code as well as any state storage consumed by the contract during normal operation. You can read more about [accounts on the NEAR platform here](https://docs.near.org/docs/concepts/account).
 
 Find examples of the following:
 
@@ -325,6 +325,5 @@ OpenPetition is a system for managing the creation and support of petitions (ie.
 If you find yourself stuck with any of this, feel free to reach out to us via the following links:
 
 - [near.org / help](http://near.org/help)
-- [NEAR Telegram Group](https://t.me/cryptonear)
-- [NEAR Discord Channel](https://discordapp.com/invite/jsAu4pP)
-- [Documentation](http://docs.nearprotocol.com/)
+- [near.chat](http://near.chat)
+- [documentation](http://docs.near.org)

@@ -1,4 +1,4 @@
-To use NEAR Shell you'll first need to install it. Please refer to the [documentation](https://docs.nearprotocol.com/docs/development/near-clitool).
+To use NEAR Shell you'll first need to install it. Please refer to the [documentation](https://docs.near.org/docs/development/near-clitool).
 
 Make sure you're in this folder then login to NEAR Shell and authorize it to use your account.
 
@@ -14,7 +14,7 @@ The result of logging in will look something like this (it may also be colorized
 Please authorize NEAR Shell on at least one of your accounts.
 
 If your browser doesn't automatically open, please visit this URL
-https://wallet.testnet.nearprotocol.com/login/?title=NEAR+Shell&public_key=ed25519%3A3KHz9owcKkcx9Q4P8VNCYyhXHaHJNjjxCadMx26CDTxB&success_url=http%3A%2F%2F127.0.0.1%3A5000
+https://wallet.testnet.near.org/login/?title=NEAR+Shell&public_key=ed25519%3A3KHz9owcKkcx9Q4P8VNCYyhXHaHJNjjxCadMx26CDTxB&success_url=http%3A%2F%2F127.0.0.1%3A5000
 Please authorize at least one account at the URL above.
 
 Which account did you authorize for use with NEAR Shell?
@@ -73,13 +73,13 @@ Having logged into NEAR Shell and verified your account state, we can now use th
 > _We're about to create an account for your contract named `greeting.<???>.testnet`._
 
 ```text
-near create_account <CONTRACT ACCOUNT> --masterAccount <YOUR ACCOUNT> --helperUrl https://helper.nearprotocol.com
+near create_account <CONTRACT ACCOUNT> --masterAccount <YOUR ACCOUNT> --helperUrl https://helper.near.org
 ```
 
 If your account was `bob.testnet` then the contract account would be `greeting.bob.testnet`.
 
 ```text
-near create_account greeting.bob.testnet --masterAccount bob.testnet --helperUrl https://helper.nearprotocol.com
+near create_account greeting.bob.testnet --masterAccount bob.testnet --helperUrl https://helper.near.org
 ```
 
 For this to work you must have already authorized NEAR Shell with `FullAccess` rights to the account listed after `--masterAccount` in the command above.
@@ -159,7 +159,7 @@ near deploy --wasm-file ./out/greeting.wasm --accountId greeting.<???>.testnet
 Which should report something like this
 
 ```text
-Starting deployment. Account id: greeting.<???>.testnet, node: https://rpc.testnet.nearprotocol.com, helper: https://helper.testnet.nearprotocol.com, file: ./out/greeting.wasm
+Starting deployment. Account id: greeting.<???>.testnet, node: https://rpc.testnet.near.org, helper: https://helper.testnet.near.org, file: ./out/greeting.wasm
 ```
 
 And we can check the contract account state again to see if we've deployed it correctly.
@@ -236,6 +236,6 @@ near delete greeting.<???>.testnet <???>.testnet
 Which should report something like
 
 ```text
-Deleting account. Account id: greeting.<???>.testnet, node: https://rpc.testnet.nearprotocol.com, helper: https://helper.testnet.nearprotocol.com, beneficiary: <???>.testnet
+Deleting account. Account id: greeting.<???>.testnet, node: https://rpc.testnet.near.org, helper: https://helper.testnet.near.org, beneficiary: <???>.testnet
 Account greeting.<???>.testnet for network "default" was deleted.
 ```
