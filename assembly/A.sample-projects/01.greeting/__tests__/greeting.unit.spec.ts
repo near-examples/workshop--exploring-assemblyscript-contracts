@@ -6,14 +6,9 @@ import {
   saveMyMessage,
   getAllMessages,
 } from "../main";
-import {
-  storage,
-  PersistentDeque,
-  Context,
-  VM,
-  PersistentMap,
-} from "near-sdk-as";
+import { storage, PersistentDeque, Context, VM } from "near-sdk-as";
 
+const contract = "greeting";
 const alice = "alice";
 const bob = "bob";
 const carol = "carol";
@@ -25,6 +20,7 @@ let messages: PersistentDeque<string>;
 
 describe("01. Greeting", () => {
   beforeEach(() => {
+    Context.setCurrent_account_id(contract);
     Context.setSigner_account_id(alice);
     messages = new PersistentDeque<string>("messages");
   });
