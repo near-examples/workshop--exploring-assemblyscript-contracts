@@ -125,7 +125,7 @@ function reportProgress(folder, output, includeWAT) {
 
 function reportFilesize(fqPath) {
   const stats = fs.statSync(fqPath);
-  console.log(`Filesize  : ${stats.size / 1000.0}kb`);
+  console.log(`Filesize  : ${stats.size / 1000.0}kB`);
 }
 
 function scanProjects() {

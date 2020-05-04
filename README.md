@@ -87,7 +87,7 @@ You can filter tests using the following syntax
 yarn test -f <contract name>.unit
 ```
 
-For example
+For example:
 
 `yarn test -f greeting.unit` or `yarn test -f counter.unit`
 
@@ -112,11 +112,11 @@ Find examples of the following:
 
 - [ ] a contract method that takes no parameters
 - [ ] a contract method that takes one parameter
-- [ ] a model used by a contract method
+- [ ] a model passed to a contract method
 
 **Models Organize and Serialize Data**
 
-NEAR Protocol stores data in a key-value store called `Storage`. For developer convenience when building more complex dApps, `Storage` also wrapped by a few other persistent collections including `PersistentVector`, `PersistentSet`, `PersistentMap` and `PersistentDeque`.
+NEAR Protocol stores data in a key-value store called `Storage`. For developer convenience when building more complex dApps, `Storage` is also wrapped by a few other persistent collections including `PersistentVector`, `PersistentSet`, `PersistentMap` and `PersistentDeque`.
 
 Reading and writing to `Storage` requires specifying the type of data to store, whether `string`, `number` or `binary`.
 

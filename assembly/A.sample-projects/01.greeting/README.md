@@ -112,14 +112,14 @@ Compile   : 300.792 ms
 Emit      : 135.141 ms
 Validate  : 54.424 ms
 Optimize  : 0.261 ms
-Filesize  : 14.666kb
+Filesize  : 14.666kB
 ✨  Done in 2.39s.
 ```
 
 > **Notes**
 >
 > - The optimize step took less than half a second (your exact timings may vary)
-> - The size of this file is about `15kb`
+> - The size of this file is about `15kB`
 
 You should now be able to see the`.wasm` and `.wat` files for this contract in a folder called `out`.
 
