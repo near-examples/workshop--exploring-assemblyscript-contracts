@@ -396,7 +396,7 @@ There are two types of integration tests we can expect to use:
 
 Only the first, using NEAR Shell, will be addressed here in any depth. Its key limitation is that we cannot orchestrate cross-contract calls.
 
-We will use NEAR Shell to login to our own user account and then use it again to create a new account for our contract before we deploy, verify, and invoke methods on the contract. Finally, we will delete the contract account to clean up after ourselves. We will rely on other tools like [NEAR Explorer](https://explorer.near.org/) for transaction visibility, history and more.
+We will use NEAR Shell to login to our own user account and then use it again to create a new account for our contract before we deploy, verify, and invoke methods on the contract. Finally, we will delete the contract account to clean up after ourselves. We will rely on other tools like [NEAR Explorer](https://explorer.testnet.near.org/) for transaction visibility, history and more.
 
 #### Integration Tests with NEAR Shell
 
@@ -441,7 +441,7 @@ near login
 - We assume you already created `<???>.testnet` in the previous step
 
 ```text
-near create_account greeting.<???>.testnet --masterAccount <???>.testnet --helperUrl https://helper.near.org
+near create_account greeting.<???>.testnet --master-account <???>.testnet --helper-url https://helper.testnet.near.org
 ```
 
 _Expected output_
@@ -470,7 +470,7 @@ compiling contract [ 01.greeting/main.ts         ] to [ out/greeting.wasm ]
 - We assume you already created `greeting.<???>.testnet` in a previous step
 
 ```text
-near deploy --wasm-file out/greeting.wasm --accountId greeting.<???>.testnet
+near deploy --wasm-file out/greeting.wasm --account-id greeting.<???>.testnet
 ```
 
 _Expected output_
@@ -516,7 +516,7 @@ Account greeting.<???>.testnet
 **Test `showYouKnow()`**
 
 ```text
-near view greeting.<???>.testnet showYouKnow --accountId <???>.testnet
+near view greeting.<???>.testnet showYouKnow --account-id <???>.testnet
 ```
 
 _Expected outcome_
@@ -530,7 +530,7 @@ false
 **Test `sayHello()`**
 
 ```text
-near view greeting.<???>.testnet sayHello --accountId <???>.testnet
+near view greeting.<???>.testnet sayHello --account-id <???>.testnet
 ```
 
 _Expected outcome_
@@ -544,7 +544,7 @@ View call: greeting.<???>.testnet.sayHello()
 **Test `sayMyName()`**
 
 ```text
-near call greeting.<???>.testnet sayMyName --accountId <???>.testnet
+near call greeting.<???>.testnet sayMyName --account-id <???>.testnet
 ```
 
 _Expected outcome_
@@ -558,7 +558,7 @@ Scheduling a call: greeting.<???>.testnet.sayMyName()
 **Test `saveMyName()`**
 
 ```text
-near call greeting.<???>.testnet saveMyName --accountId <???>.testnet
+near call greeting.<???>.testnet saveMyName --account-id <???>.testnet
 ```
 
 _Expected outcome_
@@ -572,7 +572,7 @@ Scheduling a call: greeting.<???>.testnet.saveMyName()
 **Test `saveMyMessage()`**
 
 ```text
-near call greeting.<???>.testnet saveMyMessage '{"message": "bob? you in there?"}' --accountId <???>.testnet
+near call greeting.<???>.testnet saveMyMessage '{"message": "bob? you in there?"}' --account-id <???>.testnet
 ```
 
 _Expected outcome_
@@ -586,7 +586,7 @@ true
 **Test `getAllMessages()`**
 
 ```text
-near call greeting.<???>.testnet getAllMessages --accountId <???>.testnet
+near call greeting.<???>.testnet getAllMessages --account-id <???>.testnet
 ```
 
 _Expected outcome_

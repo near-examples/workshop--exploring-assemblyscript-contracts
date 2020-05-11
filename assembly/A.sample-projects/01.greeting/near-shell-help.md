@@ -73,16 +73,16 @@ Having logged into NEAR Shell and verified your account state, we can now use th
 > _We're about to create an account for your contract named `greeting.<???>.testnet`._
 
 ```text
-near create_account <CONTRACT ACCOUNT> --masterAccount <YOUR ACCOUNT> --helperUrl https://helper.near.org
+near create_account <CONTRACT ACCOUNT> --master-account <YOUR ACCOUNT> --helper-url https://helper.testnet.near.org
 ```
 
 If your account was `bob.testnet` then the contract account would be `greeting.bob.testnet`.
 
 ```text
-near create_account greeting.bob.testnet --masterAccount bob.testnet --helperUrl https://helper.near.org
+near create_account greeting.bob.testnet --master-account bob.testnet --helper-url https://helper.testnet.near.org
 ```
 
-For this to work you must have already authorized NEAR Shell with `FullAccess` rights to the account listed after `--masterAccount` in the command above.
+For this to work you must have already authorized NEAR Shell with `FullAccess` rights to the account listed after `--master-account` in the command above.
 
 **If it works**, this should report something like the following
 
@@ -92,13 +92,13 @@ Account greeting.<???>.testnet for network "default" was created.
 
 **If it fails**, this will most likely report one of the following 3 errors:
 
-(1) The `--masterAccount` **doesn't exist on the network**. To resolve, fix the account name.
+(1) The `--master-account` **doesn't exist on the network**. To resolve, fix the account name.
 
 ```text
 Server error: account <???> does not exist while viewing
 ```
 
-(2) The `--masterAccount` **is not authorized for use by NEAR Shell**. To resolve, `near login` again.
+(2) The `--master-account` **is not authorized for use by NEAR Shell**. To resolve, `near login` again.
 
 ```text
 TypedError: Can not sign transactions for account <???>, no matching key pair found in Signer.
@@ -152,7 +152,7 @@ compiling contract [ 01.greeting/main.ts         ] to [ out/greeting.wasm ]
 And then
 
 ```text
-near deploy --wasm-file ./out/greeting.wasm --accountId greeting.<???>.testnet
+near deploy --wasm-file ./out/greeting.wasm --account-id greeting.<???>.testnet
 
 ```
 
@@ -188,7 +188,7 @@ Account greeting.<???>.testnet
 And now that the contract is deployed we can test it out (remember to replace `<???>` so both account names below match your own)
 
 ```text
-near call greeting.<???>.testnet sayMyName --accountId <???>.testnet --gas 10000000000000000000
+near call greeting.<???>.testnet sayMyName --account-id <???>.testnet --gas 10000000000000000000
 ```
 
 Which should report something like
@@ -216,7 +216,7 @@ Server error: Timeout
 Testing the other method in this contract follows exactly the same process but we will also notice a change in the state of the contract as the signing account `<???>.testnet` is stored in contract state.
 
 ```text
-near call greeting.<???>.testnet saveMyName --accountId <???>.testnet --gas 10000000000000000000
+near call greeting.<???>.testnet saveMyName --account-id <???>.testnet --gas 10000000000000000000
 ```
 
 And finally let's delete the contract account to cleanup. This step is optional of course.
