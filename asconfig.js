@@ -67,7 +67,6 @@ function compileOptimized(fqPath, { relPath = "" }) {
       "--binaryFile",
       `${relPath}out/${output}.wasm`,
       "-O3z", // optimize for size and speed
-      "--validate", // validate the generated wasm module
       "--runPasses",
       "inlining-optimizing,dce", // inlines to optimize and removes deadcode
       "--measure", // shows compiler run time
@@ -93,7 +92,6 @@ function compileReadable(fqPath, { relPath = "" }) {
     fqPath, // input file
     `out/${output}.wasm`, // output file
     [
-      "--validate", // validate the generated wasm module
       "--measure", // shows compiler run time
       "--runPasses", "inlining-optimizing,dce", // inlines to optimize and removes deadcode
     ],
@@ -126,7 +124,7 @@ function reportProgress(folder, output, includeWAT) {
 
 function reportFilesize(fqPath) {
   const stats = fs.statSync(fqPath);
-  console.log(`Filesize  : ${stats.size / 1000.0}kb`);
+  console.log(`Filesize   :    ${stats.size / 1000.0} kb\n`);
 }
 
 function scanProjects() {
