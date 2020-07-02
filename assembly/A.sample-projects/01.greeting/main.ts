@@ -1,7 +1,7 @@
 import { context, logging, storage, PersistentDeque } from "near-sdk-as";
 
 /**
- * sayNothing is a
+ * showYouKnow is a
  * - "view" function (ie. does not alter state)
  * - that takes no parameters
  * - and returns nothing
