@@ -1,5 +1,5 @@
 import { PostedMessage } from '../model'
-import { u128, Context as VMContext } from "near-sdk-as"
+import { u128, VMContext } from "near-sdk-as"
 
 function createMessage(text: string): PostedMessage {
   return new PostedMessage(text);

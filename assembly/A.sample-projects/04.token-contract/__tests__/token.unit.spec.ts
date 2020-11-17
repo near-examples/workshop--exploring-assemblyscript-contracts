@@ -1,4 +1,4 @@
-import { Context, u128 } from "near-sdk-as";
+import { VMContext, u128 } from "near-sdk-as";
 import {
   init,
   totalSupply,
@@ -14,8 +14,8 @@ let eve = "eve.near";
 
 describe("04. Token", () => {
   beforeEach(() => {
-    Context.setSigner_account_id(alice);
-    Context.setAccount_balance(u128.fromString("1000000"));
+    VMContext.setSigner_account_id(alice);
+    VMContext.setAccount_balance(u128.fromString("1000000"));
     init(alice);
   });
 

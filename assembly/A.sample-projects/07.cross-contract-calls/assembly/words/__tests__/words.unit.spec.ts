@@ -1,6 +1,6 @@
 import { reverse, upcase } from "../main";
 import { Word } from "../model";
-import { Context as VMContext, VM } from "near-sdk-as";
+import { VMContext, VM } from "near-sdk-as";
 
 const alice: string = "alice";
 

@@ -5,7 +5,7 @@ import {
     decrementCounter
 } from '../main';
 
-import { context, storage, VM, Context as VMContext } from 'near-sdk-as';
+import { context, storage, VM, VMContext } from 'near-sdk-as';
 
 describe("Counter ", () => {
     beforeEach(() => {
@@ -55,5 +55,3 @@ describe("Counter ", () => {
         expect(context.contractName).toBe("eve");
     });
 });
-
-
