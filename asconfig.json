@@ -1,0 +1,11 @@
+{
+  "workspaces": [
+    "assembly/A.sample-projects/01.greeting",
+    "assembly/A.sample-projects/02.wallet-example",
+    "assembly/A.sample-projects/03.counter",
+    "assembly/A.sample-projects/05.guestbook",
+    "assembly/A.sample-projects/07.cross-contract-calls/assembly/sentences",
+    "assembly/A.sample-projects/07.cross-contract-calls/assembly/words"
+  ],
+  "outDir": "./out"
+}

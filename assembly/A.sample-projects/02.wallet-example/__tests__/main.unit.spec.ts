@@ -1,6 +1,6 @@
-import { sayHi, whoSaidHi } from "../main";
+import { sayHi, whoSaidHi } from "../assembly";
 import { context, storage, VM } from "near-sdk-as";
-import { LAST_SENDER_KEY } from "../model";
+import { LAST_SENDER_KEY } from "../assembly/model";
 
 describe("02. Wallet", () => {
   it("should say Hi", () => {

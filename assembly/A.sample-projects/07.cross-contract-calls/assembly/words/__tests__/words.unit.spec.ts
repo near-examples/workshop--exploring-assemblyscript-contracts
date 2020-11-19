@@ -1,4 +1,4 @@
-import { reverse, upcase } from "../main";
+import { reverse, upcase } from "..";
 import { Word } from "../model";
 import { VMContext, VM } from "near-sdk-as";
 

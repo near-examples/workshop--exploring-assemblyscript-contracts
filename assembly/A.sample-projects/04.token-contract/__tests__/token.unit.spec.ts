@@ -6,7 +6,7 @@ import {
   transfer,
   approve,
   transferFrom,
-} from "../main";
+} from "../assembly";
 
 let alice = "alice";
 let bob = "bob.near";

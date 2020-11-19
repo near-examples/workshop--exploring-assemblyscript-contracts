@@ -1,4 +1,4 @@
-import { PostedMessage } from "../model";
+import { PostedMessage } from "../assembly/model";
 import { u128, VMContext } from "near-sdk-as";
 
 function createMessage(text: string): PostedMessage {

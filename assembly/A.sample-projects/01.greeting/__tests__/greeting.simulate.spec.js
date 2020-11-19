@@ -1,6 +1,8 @@
-const { Runtime } = require("near-sdk-as/runtime");
+const {
+  Runtime
+} = require("near-sdk-simulator");
 
-const WASM_FILE = __dirname + "/../out/greeting.wasm";
+const WASM_FILE = __dirname + "../../../../out/debug/01.greeting.wasm";
 
 describe("Greeting ", () => {
   const users = ["alice", "bob", "carol"];
@@ -36,7 +38,9 @@ describe("Greeting ", () => {
         },
       };
 
-      const { result } = simulate(transaction);
+      const {
+        result
+      } = simulate(transaction);
 
       expectToFind("showYouKnow() was called", {
         inArray: result.outcome.logs,
@@ -53,7 +57,10 @@ describe("Greeting ", () => {
         },
       };
 
-      const { result, data } = simulate(transaction);
+      const {
+        result,
+        data
+      } = simulate(transaction);
 
       expect(data).toEqual("Hello!");
       expectToFind("sayHello() was called", {
@@ -71,7 +78,10 @@ describe("Greeting ", () => {
           },
         };
 
-        const { result, data } = simulate(transaction);
+        const {
+          result,
+          data
+        } = simulate(transaction);
 
         expectToFind("getAllMessages() was called", {
           inArray: result.outcome.logs,
@@ -79,7 +89,9 @@ describe("Greeting ", () => {
       });
 
       it("works with 1 message", () => {
-        sendMessage(accounts.alice, { message: messages[0] });
+        sendMessage(accounts.alice, {
+          message: messages[0]
+        });
 
         const transaction = {
           signer: accounts.alice,
@@ -93,7 +105,10 @@ describe("Greeting ", () => {
         // useful for visualizing contract state
         // console.log(greeting.state);
 
-        const { result, data } = simulate(transaction);
+        const {
+          result,
+          data
+        } = simulate(transaction);
 
         expectToFind("alice says awesomesauce!", {
           inArray: data,
@@ -111,7 +126,9 @@ describe("Greeting ", () => {
           let signer = accounts[user];
           let message = messages[idx];
 
-          sendMessage(signer, { message });
+          sendMessage(signer, {
+            message
+          });
           expectedMessages.push(`${signer.account_id} says ${message}`);
         });
 
@@ -126,7 +143,10 @@ describe("Greeting ", () => {
         // useful for visualizing contract state
         // console.log(greeting.state);
 
-        const { result, data } = simulate(transaction);
+        const {
+          result,
+          data
+        } = simulate(transaction);
 
         expectedMessages.map((message) => {
           expectToFind(message, {
@@ -152,7 +172,10 @@ describe("Greeting ", () => {
         },
       };
 
-      const { data, result } = simulate(transaction);
+      const {
+        data,
+        result
+      } = simulate(transaction);
 
       expect(data).toEqual(`Hello, ${accounts.alice.account_id}!`);
       expectToFind("sayMyName() was called", {
@@ -170,7 +193,9 @@ describe("Greeting ", () => {
         },
       };
 
-      const { result } = simulate(transaction);
+      const {
+        result
+      } = simulate(transaction);
 
       // "c2VuZGVy" is " in base64
       // "YWxpY2U=" is "alice" in base64
@@ -188,11 +213,16 @@ describe("Greeting ", () => {
         method: {
           type: "call",
           name: "saveMyMessage",
-          params: { message: "awesomesauce" },
+          params: {
+            message: "awesomesauce"
+          },
         },
       };
 
-      const { data, result } = simulate(transaction);
+      const {
+        data,
+        result
+      } = simulate(transaction);
 
       expect(data).toBeTruthy();
 
@@ -228,18 +258,26 @@ describe("Greeting ", () => {
       },
     };
 
-    const { data } = simulate(transaction);
+    const {
+      data
+    } = simulate(transaction);
 
     expect(data).toBeTruthy();
   }
 
-  function expectToFind(target, { inArray }) {
+  function expectToFind(target, {
+    inArray
+  }) {
     if (inArray) {
       expect(inArray).toEqual(expect.arrayContaining([target]));
     }
   }
 
-  function simulate({ signer, contract, method }, printResponse = false) {
+  function simulate({
+    signer,
+    contract,
+    method
+  }, printResponse = false) {
     let response;
 
     if (signer) {

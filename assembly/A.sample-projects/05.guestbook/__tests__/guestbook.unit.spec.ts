@@ -1,5 +1,5 @@
-import { addMessage, getMessages } from "../main";
-import { PostedMessage, messages } from "../model";
+import { addMessage, getMessages } from "../assembly";
+import { PostedMessage, messages } from "../assembly/model";
 
 function createMessage(text: string): PostedMessage {
   return new PostedMessage(text);

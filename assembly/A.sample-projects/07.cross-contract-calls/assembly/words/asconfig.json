@@ -1,0 +1,4 @@
+{
+  "extends": "near-sdk-as/asconfig.json",
+  "entry": "index.ts"
+}

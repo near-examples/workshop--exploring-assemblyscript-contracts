@@ -3,7 +3,7 @@ import {
   resetCounter,
   incrementCounter,
   decrementCounter,
-} from "../main";
+} from "../assembly";
 
 import { context, storage, VM, VMContext } from "near-sdk-as";
 

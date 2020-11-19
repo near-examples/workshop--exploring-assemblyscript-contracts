@@ -1,4 +1,4 @@
-import { getChannelCollectionName, getThreadCollectionName } from "../models";
+import { getChannelCollectionName, getThreadCollectionName } from "../assembly/models";
 
 describe("06. Chat :: Helpers", () => {
   it("should return the channel collection name", () => {

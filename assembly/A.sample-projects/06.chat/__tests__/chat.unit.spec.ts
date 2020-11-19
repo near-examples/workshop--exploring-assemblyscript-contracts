@@ -1,4 +1,4 @@
-import { THREAD_NAME_PREFIX } from "../models";
+import { THREAD_NAME_PREFIX } from "../assembly/models";
 import {
   addMessage,
   getMessagesForThread,
@@ -6,7 +6,7 @@ import {
   setThreadName,
   getThreadName,
   getAllMessages,
-} from "../main";
+} from "../assembly";
 
 const general = "general";
 const firstMessage = "First Message";

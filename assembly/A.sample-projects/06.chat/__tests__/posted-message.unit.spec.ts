@@ -1,4 +1,4 @@
-import { PostedMessage } from "../models";
+import { PostedMessage } from "../assembly/models";
 
 describe("06. Chat :: PostedMessage", () => {
   it("should allow instantiation", () => {

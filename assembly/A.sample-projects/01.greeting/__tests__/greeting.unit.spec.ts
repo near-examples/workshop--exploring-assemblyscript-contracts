@@ -5,7 +5,7 @@ import {
   saveMyName,
   saveMyMessage,
   getAllMessages,
-} from "../main";
+} from "../assembly";
 import { storage, PersistentDeque, VMContext, VM } from "near-sdk-as";
 
 const contract = "greeting";
