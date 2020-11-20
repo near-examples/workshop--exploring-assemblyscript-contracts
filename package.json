@@ -12,7 +12,7 @@
     "test": "yarn test:unit",
     "test:unit": "asp --verbose -f unit.spec",
     "test:simulate:vm": "yarn near-vm",
-    "test:simulate:vm:greeting": "yarn test:simulate:vm --wasm-file out/debug/greeting.wasm --method-name sayMyName"
+    "test:simulate:vm:greeting": "yarn test:simulate:vm --wasm-file out/debug/01.greeting.wasm --method-name sayMyName"
   },
   "devDependencies": {
     "near-cli": "^1.3.1",
