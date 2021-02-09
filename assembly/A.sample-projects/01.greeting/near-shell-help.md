@@ -1,4 +1,4 @@
-To use NEAR Shell you'll first need to install it. Please refer to the [documentation](https://docs.near.org/docs/development/near-clitool).
+To use NEAR Shell you'll first need to install it. Please refer to the [documentation](https://docs.near.org/docs/tools/near-cli).
 
 Make sure you're in this folder then login to NEAR Shell and authorize it to use your account.
 

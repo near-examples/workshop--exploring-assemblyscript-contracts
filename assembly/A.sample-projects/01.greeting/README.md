@@ -4,20 +4,21 @@
 
 _This challenge is part of a larger workshop on AssemblyScript_
 
-- [Design](#design)
-  - [Interface](#interface)
-  - [Models](#models)
-- [Build](#build)
-  - [Readable Output](#readable-output)
-  - [Cost Optimized Output](#cost-optimized-output)
-- [Test](#test)
-  - [Unit Tests](#unit-tests)
-  - [Simulation Tests](#simulation-tests)
-    - [Simulation Testing with `near-vm`](#simulation-testing-with-near-vm)
-    - [Simulation Testing with Runtime API](#simulation-testing-with-runtime-api)
-  - [Integration Tests](#integration-tests)
-    - [Integration Tests with NEAR Shell](#integration-tests-with-near-shell)
-    - [Integration Tests with `near-api-js`](#integration-tests-with-near-api-js)
+- [NEAR Protocol Workshop :: Development Lifecycle Challenge](#near-protocol-workshop--development-lifecycle-challenge)
+  - [Design](#design)
+    - [Interface](#interface)
+    - [Models](#models)
+  - [Build](#build)
+    - [Readable Output](#readable-output)
+    - [Cost Optimized Output](#cost-optimized-output)
+  - [Test](#test)
+    - [Unit Tests](#unit-tests)
+    - [Simulation Tests](#simulation-tests)
+      - [Simulation Testing with `near-vm`](#simulation-testing-with-near-vm)
+      - [Simulation Testing with Runtime API](#simulation-testing-with-runtime-api)
+    - [Integration Tests](#integration-tests)
+      - [Integration Tests with NEAR Shell](#integration-tests-with-near-shell)
+      - [Integration Tests with `near-api-js`](#integration-tests-with-near-api-js)
 
 ## Design
 
@@ -43,7 +44,7 @@ export function sayHello(): string;
 export function sayMyName(): string;
 ```
 
-- "Call" function (although it does NOT alter state, it DOES read from `context`, [see docs for details](https://docs.near.org/docs/roles/developer/contracts/assemblyscript#potential-gotchas))
+- "Call" function (although it does NOT alter state, it DOES read from `context`, [see docs for details](https://docs.near.org/docs/develop/contracts/as/intro))
 - Takes no parameters
 - Returns a string
 
@@ -625,4 +626,4 @@ We use `near-api-js` internally in tools like NEAR Shell and NEAR Wallet.
 
 You would use `near-api-js` as your primary interface with the NEAR platform anytime you are writing JavaScript (client or server-side).
 
-See our [documentation for more details](https://docs.near.org/docs/roles/developer/examples/near-api-js/introduction).
+See our [documentation for more details](https://docs.near.org/docs/develop/front-end/introduction).
