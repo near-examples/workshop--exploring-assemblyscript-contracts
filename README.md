@@ -173,7 +173,7 @@ Find examples of the following:
 <details>
   <summary><em>Reveal hints</em></summary>
   <ul>
-    <li>Run this command in the terminal to reveal the needed fixes<br><code>git diff --no-index assembly/B.debugging-challenge/01.broken-greeting/main.ts assembly/A.sample-projects/01.greeting/main.ts</code></li>
+    <li>Run this command in the terminal to reveal the needed fixes<br><code>git diff --no-index assembly/B.debugging-challenge/01.broken-greeting/main.ts assembly/A.sample-projects/01.greeting/assembly/index.ts</code></li>
   </ul>
 </details>
 
@@ -205,7 +205,7 @@ Find examples of the following:
   <summary><em>Reveal hints</em></summary>
   <ul>
     <li>One error is preventing the code from compiling so none of the other tests are running.  solve the compiler error first so you can see the failing tests</li>
-    <li>Run this command in the terminal to reveal the needed fixes<br><code>git diff --no-index assembly/A.sample-projects/03.counter/main.ts assembly/B.debugging-challenge/03.broken-counter/main.ts</code></li>
+    <li>Run this command in the terminal to reveal the needed fixes<br><code>git diff --no-index assembly/B.debugging-challenge/03.broken-counter/main.ts assembly/A.sample-projects/03.counter/assembly/index.ts</code></li>
   </ul>
 </details>
 
@@ -221,7 +221,7 @@ Note, in this challenge, some of the issues are preventing the code from the com
   <li>Persistent collections like <code>PersistentVector<T></code>require a type parameter which will often be the model you are trying to store on chain</li>
   <li>You can get the account name of the user that calls a function using <code>context.sender</code></li>
   <li>Run this command in the terminal to reveal the needed fixes for the <strong>contract</strong><br><code>git diff --no-index assembly/A.sample-projects/05.guestbook/main.ts assembly/B.debugging-challenge/05.broken-guestbook/main.ts</code></li>
-  <li>Run this command in the terminal to reveal the needed fixes for the <strong>model</strong><br><code>git diff --no-index assembly/A.sample-projects/05.guestbook/model.ts assembly/B.debugging-challenge/05.broken-guestbook/model.ts</code></li>
+  <li>Run this command in the terminal to reveal the needed fixes for the <strong>model</strong><br><code>git diff --no-index assembly/B.debugging-challenge/05.broken-guestbook/model.ts assembly/A.sample-projects/05.guestbook/assembly/model.ts</code></li>
 </details>
 
 ## Activity::Development Lifecycle
